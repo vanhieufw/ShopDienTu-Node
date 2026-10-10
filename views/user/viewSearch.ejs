@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kết quả tìm kiếm</title>
+
+    <!-- CSS -->
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+
+    <style>
+        .search-area-advanced {
+            background: #f4f4f4;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+
+        .search-form-wrap {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .search-form-wrap input,
+        .search-form-wrap select {
+            height: 40px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+        }
+
+        .search-form-wrap button {
+            background: #5a88ca;
+            color: #fff;
+            border: none;
+            padding: 0 20px;
+            font-weight: bold;
+        }
+
+        /* CSS sửa lỗi lệch khung sản phẩm */
+        .single-product {
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .product-f-image img {
+            height: 250px;
+            /* Cố định chiều cao ảnh */
+            width: 100%;
+            object-fit: cover;
+            /* Giữ ảnh không bị méo */
+            transition: all 0.3s;
+        }
+    </style>
+</head>
+
+<body>
+<%
+  var products = typeof products !== 'undefined' ? products : [];
+  var keyword = typeof keyword !== 'undefined' ? keyword : '';
+  var totalQty = typeof totalQty !== 'undefined' ? totalQty : 0;
+  var session = typeof session !== 'undefined' ? session : {};
+%>
+
+    <!-- Main Menu -->
+    <div class="mainmenu-area">
+        <div class="container">
+            <div class="row">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Trang chủ</a></li>
+                        <li><a href="/shop">Cửa hàng</a></li>
+                        <li><a href="/about">Giới thiệu</a></li>
+                        <li><a href="/contact">Liên hệ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2>Kết quả tìm kiếm: "<%= keyword || '' %>"</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <%
+                  var products = typeof products !== 'undefined' ? products : [];
+                %>
+                <% if (products.length) {
+                    products.forEach(function(row) {
+                      var gia_goc = Number(row.PriceProduct) || 0;
+                      var giam = row.Discount ? Number(row.Discount) : 0;
+                      var gia_moi = gia_goc * (100 - giam) / 100;
+                %>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="single-shop-product">
+                            <div class="product-upper">
+                                <img src="/img/<%= row.ImageUrlProduct || '' %>" alt="" class="product-img">
+                            </div>
+                            <h2><a href="/detail?id=<%= row.IDProduct %>"><%= row.NameProduct %></a></h2>
+                            <div class="product-carousel-price">
+                                <ins><%= Number(gia_moi).toLocaleString('vi-VN') %>đ</ins>
+                                <% if (giam > 0) { %>
+                                    <del><%= Number(gia_goc).toLocaleString('vi-VN') %>đ</del>
+                                    <span class="onsale">-<%= giam %>%</span>
+                                <% } %>
+                            </div>
+                            <div class="product-option-shop">
+                                <form action="/add-to-cart" method="POST">
+                                    <input type="hidden" name="product_id" value="<%= row.IDProduct %>">
+                                    <button type="submit" class="add_to_cart_button">Giỏ Hàng</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <% }) } else { %>
+                    <div class="col-md-12">
+                        <p class="text-center">Không tìm thấy sản phẩm nào cho từ khóa "<%= keyword || '' %>".</p>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-top-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-about-us">
+                        <h2>Zo<span>nanio</span></h2>
+                        <p>Trong thời đại hiện đại, sự tiện lợi và linh hoạt trong việc mua sắm trực tuyến ngày càng trở thành một xu hướng phổ biến. Đối với lĩnh vực điện tử, điện máy, việc tạo ra một website bán hàng chuyên nghiệp không chỉ là một cơ hội kinh doanh mà còn là cách để đáp ứng nhu cầu ngày càng cao của khách hàng.</p>
+                        <div class="footer-social">
+                            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Thanh điều hướng </h2>
+                        <ul>
+                            <li><a href="/my-account">Tài khoản</a></li> <!-- filter -->
+                            <li><a href="/my-orders">Lịch sử mua hàng</a></li> <!-- filter -->
+                            <li><a href="#">Yêu thích</a></li> <!-- filter -->
+                            <li><a href="/contact">Liên hệ</a></li> <!-- filter -->
+                            <li><a href="/">Trang chủ</a></li> <!-- filter -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Danh mục</h2>
+                        <ul>
+                            <li><a href="/shop?cat_id=4">LAPTOP</a></li> <!-- filter -->
+                            <li><a href="/shop?cat_id=3">Phụ Kiện </a></li> <!-- filter -->
+                            <li><a href="/shop?cat_id=1">TV - Điện Máy</a></li> <!-- filter -->
+                            <li><a href="/shop?cat_id=5">Đồng Hồ</a></li> <!-- filter -->
+                            <li><a href="/shop?cat_id=2">PC GAMING</a></li> <!-- filter -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-feedback">
+                        <h2 class="footer-wid-title">Phản hồi</h2>
+                        <p>Vui lòng liên hệ với chúng tôi nếu bạn có bất kỳ thắc mắc, phản hồi hoặc cần hỗ trợ nào. Chúng tôi luôn sẵn lòng trợ giúp!</p>
+                        <div class="feedback-form">
+                            <form action="404.html">
+                                <input type="email" placeholder="Nhập email...">
+                                <input type="submit" value="ĐĂNG KÝ">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End footer top area -->
+
+    <div class="footer-bottom-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="copyright">
+                        <p>&copy; Zonanio. Bản quyền đã được bảo hộ. </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="footer-card-icon">
+                        <i class="fa fa-cc-discover"></i>
+                        <i class="fa fa-cc-mastercard"></i>
+                        <i class="fa fa-cc-paypal"></i>
+                        <i class="fa fa-cc-visa"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End footer bottom area -->
+    <!-- Latest jQuery form server -->
+
+    <div class="floating-contact-wrap">
+
+        <a href="https://zalo.me/0705955589" target="_blank" class="contact-btn btn-zalo">
+            <span class="zalo-text">Z</span>
+            <div class="contact-tooltip">Chat Zalo</div>
+        </a>
+
+        <a href="https://m.me/102803015947076" target="_blank" class="contact-btn btn-messenger">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.03 2 11C2 13.66 3.39 16.05 5.61 17.58L4.99 20.54C4.86 21.13 5.39 21.61 5.95 21.43L9.08 20.41C10.02 20.79 11 21 12 21C17.52 21 22 16.97 22 12C22 7.03 17.52 2 12 2ZM13.06 15.19L10.68 12.63L6.03 15.18C5.69 15.37 5.28 15 5.43 14.64L8.08 8.41C8.25 8.02 8.78 8.02 8.95 8.41L11.32 10.97L15.97 8.42C16.31 8.23 16.72 8.6 16.57 8.96L13.92 15.19C13.75 15.58 13.22 15.58 13.06 15.19Z" />
+                </path>
+            </svg>
+            <div class="contact-tooltip">Chat Facebook</div>
+        </a>
+
+    </div>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+
+    <!-- Bootstrap JS form CDN -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- jQuery sticky menu -->
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/jquery.sticky.js"></script>
+
+    <!-- jQuery easing -->
+    <script src="/js/jquery.easing.1.3.min.js"></script>
+
+    <!-- Main Script -->
+    <script src="/js/main.js"></script>
+
+    <!-- Slider -->
+    <script type="text/javascript" src="/js/bxslider.min.js"></script>
+    <script type="text/javascript" src="/js/script.slider.js"></script>
+    <script>
+        function addToCartPost(productId) {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'add_to_cart';
+
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'product_id';
+            input.value = productId;
+
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<%- include('layout/header') %>
+<h2 class="mb-4">Đánh giá sản phẩm</h2>
+<table class="table table-bordered bg-white">
+  <thead class="table-dark">
+    <tr>
+      <th>ID</th><th>Sản phẩm</th><th>Người đánh giá</th><th>Email</th>
+      <th>Sao</th><th>Nội dung</th><th>Ngày</th><th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% (reviews || []).forEach(function(r) { %>
+    <tr>
+      <td><%= r.IDReview %></td>
+      <td><%= r.NameProduct || r.IDProduct %></td>
+      <td><%= r.NameComment %></td>
+      <td><%= r.EmailComment %></td>
+      <td><%= r.Rating %></td>
+      <td><%= r.Content %></td>
+      <td><%= r.DateComment ? new Date(r.DateComment).toLocaleString('vi-VN') : '' %></td>
+      <td>
+        <a href="/admin/reviews/delete?id=<%= r.IDReview %>" class="btn btn-sm btn-danger"
+           onclick="return confirm('Xóa đánh giá?')">Xóa</a>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+</div></body></html>

@@ -1,0 +1,202 @@
+:root{
+    --write-color: #fff;
+    --black-color: #000;
+    --text-color:#333;
+    --primary-color: #00877c;
+    --secondary-color: #00b3ad;
+    --text-secondary-color: #606a78;
+    --input-text-background-color: #f0fdfa;
+}
+*{
+    box-sizing: inherit;
+}
+html{
+    box-sizing: border-box;
+    font-size: 62.5%;
+    line-height: 1.6rem;
+    font-family: 'Roboto', sans-serif;
+}
+/* .grid{
+    width: 1200px;
+    margin: 0 auto;
+    max-width: 100%;
+}
+.grid__full-width{
+    width: 100%;
+}
+.grid__row{
+    display: flex;
+    flex-wrap: wrap;
+} */
+/* animation */
+/* Animation */
+@keyframes fadeIn{
+    0%{
+        opacity: 0;
+
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes growth {
+    from{
+        transform: scale(var(--growth-from));
+    }
+    to{
+        transform: scale(var(--growth-to));
+    }
+
+}
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+
+}
+
+@keyframes slideOutToRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatSoft {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes zoomSoft {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+@keyframes saleFloat {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes dotPulseSoft {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.18); opacity: 0.6; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+
+
+/* --- CUSTOM TOAST NOTIFICATION --- */
+#toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999999;
+}
+
+/* 2. Cái thông báo (Toast) */
+.toast-message {
+    display: flex;
+    align-items: center;
+    /* Khoảng cách giữa Icon và Chữ (Cái bạn cần đây) */
+    gap: 15px; 
+    
+    /* Màu nền và viền */
+    background-color: #fff !important; /* Nền trắng tuyệt đối */
+    border-left: 5px solid #009f7f; /* Viền xanh điểm nhấn */
+    
+    /* Kích thước và bo góc */
+    padding: 18px 24px; /* To hơn xíu cho sang */
+    border-radius: 8px; /* Bo góc mềm mại hơn */
+    min-width: 320px;
+    max-width: 450px;
+    
+    /* Đổ bóng xịn (Soft Shadow) */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    
+    /* Chữ */
+    color: #333;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+    
+    /* Hiệu ứng */
+    opacity: 1 !important; /* Chống tàng hình */
+    animation: slideInLeft 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+    cursor: pointer;
+}
+
+/* 3. Icon */
+.toast-message i {
+    font-size: 26px; /* Icon to hơn */
+    color: #009f7f;
+    flex-shrink: 0; /* Giữ icon không bị méo khi chữ dài */
+}
+
+/* 4. Biến thể màu Đỏ (Error) */
+.toast-message.error {
+    border-left-color: #ff424f;
+}
+.toast-message.error i {
+    color: #ff424f;
+}
+/* Hiệu ứng trượt từ phải sang */
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(100%); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Hiệu ứng mờ dần để biến mất */
+@keyframes fadeOut {
+    to { opacity: 0; }
+}
+
+
+/* modal */
+.modal {
+    display: flex;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+    animation: fadeIn 0.3s ease-in-out;
+    /* display: none; */
+}
+.modal.hidden{
+    display: none;
+}
+.modal__overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* backdrop-filter: blur(5px);  */
+  
+}
+.modal__body {
+    position: relative;
+    margin: auto;
+    z-index: 3;
+    background-color: #fff;
+    border-radius: 15px;
+    --growth-from: 0.7;
+    --growth-to: 1;
+    animation: growth 0.3s ease-in-out;
+}
+.hidden {
+  display: none;
+}

@@ -1,0 +1,46 @@
+<%- include('layout/header') %>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Danh mục</h2>
+</div>
+<div class="row">
+  <div class="col-md-5">
+    <form action="/admin/categories/store" method="POST" class="bg-white p-3 rounded shadow-sm">
+      <input type="hidden" name="id" id="catId" value="">
+      <div class="mb-3">
+        <label class="form-label">Tên danh mục</label>
+        <input type="text" name="NameCategory" id="catName" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Lưu</button>
+      <button type="button" class="btn btn-secondary" onclick="resetForm()">Hủy</button>
+    </form>
+  </div>
+  <div class="col-md-7">
+    <table class="table table-bordered bg-white">
+      <thead class="table-dark"><tr><th>ID</th><th>Tên</th><th>Thao tác</th></tr></thead>
+      <tbody>
+        <% (categories || []).forEach(function(c) { %>
+        <tr>
+          <td><%= c.IDCategory %></td>
+          <td><%= c.NameCategory %></td>
+          <td>
+            <button class="btn btn-sm btn-warning" onclick="editCat(<%= c.IDCategory %>, '<%= c.NameCategory.replace(/'/g, \"\\\\'\") %>')">Sửa</button>
+            <a href="/admin/categories/delete?id=<%= c.IDCategory %>" class="btn btn-sm btn-danger"
+               onclick="return confirm('Xóa?')">Xóa</a>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+function editCat(id, name) {
+  document.getElementById('catId').value = id;
+  document.getElementById('catName').value = name;
+}
+function resetForm() {
+  document.getElementById('catId').value = '';
+  document.getElementById('catName').value = '';
+}
+</script>
+</div></body></html>

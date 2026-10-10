@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shop Page</title>
+    <link rel="icon" type="image/png" href="/img/letter-z.png">
+
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    </head>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/css/grid.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+</head>
+
+<body>
+<%
+  var user = typeof user !== 'undefined' ? user : {};
+  var totalQty = typeof totalQty !== 'undefined' ? totalQty : 0;
+  var session = typeof session !== 'undefined' ? session : {};
+  var keyword = typeof keyword !== 'undefined' ? keyword : '';
+%>
+
+
+    <div class="header-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="user-menu">
+                        <ul>
+                            <li><a href="/my-account"><i class="fa fa-user"></i> Tài Khoản</a></li>
+                            <li><a href="#"><i class="fa fa-heart"></i> Yêu Thích</a></li>
+                            <li><a href="/cart"><i class="fa fa-user"></i> Giỏ Hàng</a></li>
+                            <li><a href="/checkout"><i class="fa fa-money"></i> Thanh Toán</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="site-branding-area1">
+        <div class="container1">
+            <div class="row1">
+                <div class="header-left">
+                    <div class="logo1">
+                        <a href="/">
+                            <img src="/img/logo.jpg" alt="Logo" />
+                        </a>
+                    </div>
+                    <div class="search">
+                        <form action="/update-profile" method="GET" style="display: flex;">
+                            <input type="text" name="keyword" placeholder="Tìm kiếm tại đây..." required
+                                value="<%= typeof keyword !== 'undefined' ? keyword : '' %>" />
+                            <button style="background-color: #5cb85c; color: white; padding: 8px 16px; border: none; border-radius: 50px;">Tìm kiếm</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="shopping-item">
+                        
+
+                        <a href="/cart">
+                            Giỏ hàng <i class="fa fa-shopping-cart"></i>
+                            <span class="product-count"><%= typeof totalQty !== 'undefined' ? totalQty : 0 %></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mainmenu-area">
+        <div class="container">
+            <div class="row">
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Trang chủ</a></li>
+                        <li><a href="/shop">Cửa hàng</a></li>
+                        <li class="active"><a href="/my-account">Tài khoản</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END HEADER AREA -->
+
+    <!-- MAIN CONTENT -->
+    <div class="single-product-area">
+        <div class="container">
+            <div class="row">
+
+                <!-- Sidebar bên trái -->
+                <div class="col-md-3">
+                    <div class="profile-container" style="padding: 15px;">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width: 80px; border-radius: 50%;">
+                            <h4 style="margin-top: 10px;"></h4>
+                        </div>
+                        <ul class="sidebar-menu list-unstyled">
+                            <li class="active"><a href="/my-account"><i class="fa fa-user"></i> Thông tin tài khoản</a></li>
+                            <li><a href="/my-orders"><i class="fa fa-list-alt"></i> Đơn hàng của tôi</a></li>
+                            <li><a href="/logout"><i class="fa fa-sign-out"></i> Đăng xuất</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Form cập nhật bên phải -->
+                <div class="col-md-9">
+                    <div class="profile-container">
+                        <h2 class="profile-title">Hồ Sơ Của Tôi</h2>
+
+                        
+                            <div class="alert alert-success">Cập nhật thông tin thành công!</div>
+                        
+
+                        <!-- QUAN TRỌNG: Thêm enctype="multipart/form-data" để gửi file -->
+                        <form action="/update-profile" method="POST" enctype="multipart/form-data">
+
+                            <!-- Phần hiển thị và chọn Avatar -->
+                            <div class="row" style="margin-bottom: 20px; display: flex; align-items: center;">
+                                <div class="col-md-3 text-center">
+                                    
+                                    <img src="" alt="Avatar" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #d70018;">
+                                </div>
+                                <div class="col-md-9">
+                                    <label>Thay đổi ảnh đại diện</label>
+                                    <input type="file" name="avatar" class="form-control" accept="image/*">
+                                    <small style="color: #666;">Chấp nhận: .jpg, .jpeg, .png</small>
+                                </div>
+                            </div>
+                            <!-- Hết phần Avatar -->
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Họ và tên</label>
+                                        <input type="text" class="form-control" name="FullNameUser" value="" required>
+                                    </div>
+                                </div>
+                                <!-- ... Các ô input khác giữ nguyên ... -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Số điện thoại</label>
+                                        <input type="text" class="form-control" name="PhoneNumberUser" value="" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email" class="form-control" name="EmailUser" value="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Ngày sinh</label>
+                                        <input type="date" class="form-control" name="BirthDay" value="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Tỉnh / Thành phố</label>
+                                        <input type="text" class="form-control" name="Province"
+                                            value=""
+                                            placeholder="Ví dụ: Hà Nội">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Quận / Huyện / Xã</label>
+                                        <input type="text" class="form-control" name="Ward"
+                                            value=""
+                                            placeholder="Ví dụ: Phường Bách Khoa">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Địa chỉ chi tiết (Số nhà, đường)</label>
+                                        <input type="text" class="form-control" name="AddressDetail"
+                                            value=""
+                                            placeholder="Ví dụ: Số 1 Đại Cồ Việt">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Ghi chú (Mặc định cho đơn hàng)</label>
+                                        <textarea class="form-control" name="Note" rows="2"
+                                            placeholder="Ví dụ: Giao giờ hành chính"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Giới tính: </label> &nbsp;
+                                        <label class="radio-inline">
+                                            <input type="radio" name="GenderUser" value="1" > Nam
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="GenderUser" value="2" > Nữ
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="GenderUser" value="0" > Khác
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <button type="submit" class="btn-update">Lưu Thay Đổi</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Đóng .row -->
+    </div> <!-- Đóng .container -->
+    </div>
+    <!-- Script JS -->
+    <div class="footer-top-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-about-us">
+                        <h2>Zo<span>nanio</span></h2>
+                        <p>Trong thời đại hiện đại, sự tiện lợi và linh hoạt trong việc mua sắm trực tuyến ngày càng trở thành một xu hướng phổ biến. Đối với lĩnh vực điện tử, điện máy, việc tạo ra một website bán hàng chuyên nghiệp không chỉ là một cơ hội kinh doanh mà còn là cách để đáp ứng nhu cầu ngày càng cao của khách hàng.</p>
+                        <div class="footer-social">
+                            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Thanh điều hướng </h2>
+                        <ul>
+                            <li><a href="/my-account">Tài khoản</a></li> <!-- filter -->
+                            <li><a href="/my-orders">Lịch sử mua hàng</a></li> <!-- filter -->
+                            <li><a href="#">Yêu thích</a></li> <!-- filter -->
+                            <li><a href="/contact">Liên hệ</a></li> <!-- filter -->
+                            <li><a href="/">Trang chủ</a></li> <!-- filter -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Danh mục</h2>
+                        <ul>
+                            <li><a href="shoppage&cat_id=4">LAPTOP</a></li> <!-- filter -->
+                            <li><a href="shoppage&cat_id=3">Phụ Kiện </a></li> <!-- filter -->
+                            <li><a href="shoppage&cat_id=1">TV - Điện Máy</a></li> <!-- filter -->
+                            <li><a href="shoppage&cat_id=5">Đồng Hồ</a></li> <!-- filter -->
+                            <li><a href="shoppage&cat_id=2">PC GAMING</a></li> <!-- filter -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-feedback">
+                        <h2 class="footer-wid-title">Phản hồi</h2>
+                        <p>Vui lòng liên hệ với chúng tôi nếu bạn có bất kỳ thắc mắc, phản hồi hoặc cần hỗ trợ nào. Chúng tôi luôn sẵn lòng trợ giúp!</p>
+                        <div class="feedback-form">
+                            <form action="404.html">
+                                <input type="email" placeholder="Nhập email...">
+                                <input type="submit" value="ĐĂNG KÝ">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End footer top area -->
+
+    <div class="footer-bottom-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="copyright">
+                        <p>&copy; Zonanio. Bản quyền đã được bảo hộ. </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="footer-card-icon">
+                        <i class="fa fa-cc-discover"></i>
+                        <i class="fa fa-cc-mastercard"></i>
+                        <i class="fa fa-cc-paypal"></i>
+                        <i class="fa fa-cc-visa"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End footer bottom area -->
+    <!-- Latest jQuery form server -->
+
+    <div class="floating-contact-wrap">
+
+        <a href="https://zalo.me/0705955589" target="_blank" class="contact-btn btn-zalo">
+            <span class="zalo-text">Z</span>
+            <div class="contact-tooltip">Chat Zalo</div>
+        </a>
+
+        <a href="https://m.me/102803015947076" target="_blank" class="contact-btn btn-messenger">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.03 2 11C2 13.66 3.39 16.05 5.61 17.58L4.99 20.54C4.86 21.13 5.39 21.61 5.95 21.43L9.08 20.41C10.02 20.79 11 21 12 21C17.52 21 22 16.97 22 12C22 7.03 17.52 2 12 2ZM13.06 15.19L10.68 12.63L6.03 15.18C5.69 15.37 5.28 15 5.43 14.64L8.08 8.41C8.25 8.02 8.78 8.02 8.95 8.41L11.32 10.97L15.97 8.42C16.31 8.23 16.72 8.6 16.57 8.96L13.92 15.19C13.75 15.58 13.22 15.58 13.06 15.19Z" />
+                </path>
+            </svg>
+            <div class="contact-tooltip">Chat Facebook</div>
+        </a>
+
+    </div>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+
+    <!-- Bootstrap JS form CDN -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- jQuery sticky menu -->
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/jquery.sticky.js"></script>
+
+    <!-- jQuery easing -->
+    <script src="/js/jquery.easing.1.3.min.js"></script>
+
+    <!-- Main Script -->
+    <script src="/js/main.js"></script>
+
+    <!-- Slider -->
+    <script type="text/javascript" src="/js/bxslider.min.js"></script>
+    <script type="text/javascript" src="/js/script.slider.js"></script>
+</body>
+<style>
+    .profile-container {
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .profile-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #d70018;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 15px;
+        margin-bottom: 25px;
+    }
+
+    .form-control {
+        height: 45px;
+        border-radius: 4px;
+    }
+
+    .btn-update {
+        background: #d70018;
+        color: #fff;
+        padding: 10px 30px;
+        font-weight: bold;
+        border: none;
+        border-radius: 4px;
+        transition: 0.3s;
+    }
+
+    .btn-update:hover {
+        background: #b30014;
+        color: #fff;
+    }
+
+    .sidebar-menu li a {
+        padding: 10px 15px;
+        display: block;
+        border-bottom: 1px solid #eee;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .sidebar-menu li a:hover,
+    .sidebar-menu li.active a {
+        background: #f8f9fa;
+        color: #d70018;
+    }
+</style>
+
+</html>

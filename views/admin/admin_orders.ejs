@@ -1,0 +1,25 @@
+<%- include('layout/header') %>
+<h2 class="mb-4">Đơn hàng</h2>
+<table class="table table-bordered bg-white">
+  <thead class="table-dark">
+    <tr>
+      <th>Mã</th><th>Khách hàng</th><th>SĐT</th><th>Tổng tiền</th>
+      <th>Địa chỉ</th><th>Thanh toán</th><th>Trạng thái</th><th>Ngày</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% (orders || []).forEach(function(o) { %>
+    <tr>
+      <td>#<%= o.IDOrder %></td>
+      <td><%= o.FullNameUser %></td>
+      <td><%= o.PhoneNumberUser %></td>
+      <td><%= Number(o.TotalAmountOrder).toLocaleString('vi-VN') %>đ</td>
+      <td><%= o.ShippingAddressOrder %></td>
+      <td><%= o.PaymentMethodOrder %></td>
+      <td><%= o.StatusOrder %></td>
+      <td><%= o.OrderDateOrder ? new Date(o.OrderDateOrder).toLocaleString('vi-VN') : '' %></td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+</div></body></html>

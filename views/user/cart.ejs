@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Giỏ Hàng</title>
+    <link rel="icon" type="image/png" href="/img/letter-z.png">
+
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    </head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/grid.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <style>
+        .onsale {
+            background: #e74c3c !important;
+            color: white !important;
+            padding: 4px 8px !important;
+            border-radius: 4px !important;
+            font-size: 12px !important;
+            font-weight: bold !important;
+            display: inline-block;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+
+<body>
+<%
+  var cartItems = typeof cartItems !== 'undefined' ? cartItems : (typeof items !== 'undefined' ? items : []);
+  var totalQty = typeof totalQty !== 'undefined' ? totalQty : 0;
+  var session = typeof session !== 'undefined' ? session : {};
+  var keyword = typeof keyword !== 'undefined' ? keyword : '';
+  var subtotal = 0;
+  var vat = 0;
+  var orderTotal = 0;
+%>
+
+    <div class="header-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="user-menu">
+                        <ul>
+                            <li><a href="/my-account"><i class="fa fa-user"></i> Tài Khoản</a></li>
+                            <li><a href="#"><i class="fa fa-heart"></i> Yêu Thích</a></li>
+                            <li><a href="/cart"><i class="fa fa-user"></i> Giỏ Hàng</a></li>
+                            <li><a href="/checkout"><i class="fa fa-user"></i> Thanh Toán</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End header area -->
+    <div class="site-branding-area1">
+        <div class="container1">
+            <div class="row1">
+                <div class="header-left">
+                    <div class="logo1">
+                        <a href="/">
+                            <img src="/img/logo.jpg" alt="Logo" />
+                        </a>
+                    </div>
+
+                    <div class="search">
+                        <form action="/search" method="GET" style="display: flex;">
+                            <input type="text" name="keyword" placeholder="Tìm kiếm tại đây..." required
+                                value="<%= typeof keyword !== 'undefined' ? keyword : '' %>" />
+                            <button style="background-color: #5cb85c; color: white; padding: 8px 16px; border: none; border-radius: 50px;">Tìm kiếm</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <!-- <div class="col-sm-6"> -->
+                    <div class="shopping-item">
+                        
+
+                        <a href="/cart">
+                            Giỏ hàng <i class="fa fa-shopping-cart"></i>
+                            <span class="product-count"><%= typeof totalQty !== 'undefined' ? totalQty : 0 %></span>
+                        </a>
+                    </div>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </div> <!-- End site branding area -->
+
+    <div class="mainmenu-area">
+        <div class="container">
+            <div class="row">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Trang chủ</a></li>
+                        <li><a href="/shop">Cửa hàng</a></li>
+                        <li class="active"><a href="/cart">Giỏ Hàng</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End mainmenu area -->
+
+    <div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2><b>Giỏ Hàng</b></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Page title area -->
+
+
+    <div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Tìm Kiếm Sản Phẩm</h2>
+                        <form action="/search" method="GET" style="display: flex; flex-direction: column;">
+                            <div>
+                                <input type="text" name="keyword" placeholder="Tìm kiếm tại đây..." required
+                                    value="<%= typeof keyword !== 'undefined' ? keyword : '' %>" />
+                            </div>
+                            <div>
+                                <input type="submit" value="Tìm Kiếm">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Sản Phẩm</h2>
+                        <div class="thubmnail-recent">
+                            <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
+                            <h2><a href="">Case MIK BARBATOS</a></h2>
+                            <div class="product-sidebar-price">
+                                <ins>3.945.000 ₫</ins>
+                                <span class="onsale">-30%</span>
+                            </div>
+                        </div>
+                        <div class="thubmnail-recent">
+                            <img src="/img/product-thumb-2.jpg" class="recent-thumb" alt="">
+                            <h2><a href="">Mainboard Gigabyte AORUS Z890</a></h2>
+                            <div class="product-sidebar-price">
+                                <ins>10.520.000 ₫</ins>
+                                <span class="onsale">-7%</span>
+                            </div>
+                        </div>
+                        <div class="thubmnail-recent">
+                            <img src="/img/product-thumb-3.jpg" class="recent-thumb" alt="">
+                            <h2><a href="">Case ASUS A21 micro-ATX 3FA</a></h2>
+                            <div class="product-sidebar-price">
+                                <ins>5.239.000 ₫</ins>
+                                <span class="onsale">-12%</span>
+                            </div>
+                        </div>
+                        <div class="thubmnail-recent">
+                            <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
+                            <h2><a href="">Case MIK BARBATOS</a></h2>
+                            <div class="product-sidebar-price">
+                                <ins>3.945.000 ₫</ins>
+                                <span class="onsale">-30%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Bài Viết Gần Đây</h2>
+                        <ul>
+                            <li><a href="/shop">Case MIK BARBATOS</a></li>
+                            <li><a href="/shop">Case ASUS A21 micro-ATX 3FA</a></li>
+                            <li><a href="/shop">SSD WD Blue 1TB</a></li>
+                            <li><a href="/shop">RAM KINGSTON 16GB</a></li>
+                            <li><a href="/shop">CPU AMD RYZEN™ 5 5600</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="product-content-right">
+                        <div class="woocommerce">
+                            <form method="post" action="#">
+                                <table cellspacing="0" class="shop_table cart">
+                                    <thead>
+                                        <tr>
+                                            <th class="product-remove">&nbsp;</th>
+                                            <th class="product-thumbnail">&nbsp;</th>
+                                            <th class="product-name">Sản Phẩm</th>
+                                            <th class="product-price">Giá</th>
+                                            <th class="product-quantity">Số Lượng</th>
+                                            <th class="product-subtotal">Tổng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    <%
+                                      var cartItems = typeof cartItems !== 'undefined' ? cartItems : (typeof items !== 'undefined' ? items : []);
+                                      var subtotal = 0;
+                                    %>
+                                    <% if (!cartItems.length) { %>
+                                            <tr>
+                                                <td colspan="6" class="text-center">Giỏ hàng của bạn đang trống. <a href="/shop">Tiếp tục mua sắm</a></td>
+                                            </tr>
+                                    <% } else {
+                                            cartItems.forEach(function(item) {
+                                                var gia_goc = Number(item.PriceProduct) || 0;
+                                                var giam = (item.Discount !== undefined && item.Discount !== null) ? Number(item.Discount) : 0;
+                                                var gia_moi = gia_goc * (100 - giam) / 100;
+                                                var qty = Number(item.QuantityCartItem || item.Quantity || 1);
+                                                var tong_tien_item = gia_moi * qty;
+                                                subtotal += tong_tien_item;
+                                    %>
+                                                <tr class="cart_item">
+                                                    <td class="product-remove">
+                                                        <a title="Xóa sản phẩm này" class="remove" href="/cart/remove?product_id=<%= item.IDProduct %>" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?');">×</a>
+                                                    </td>
+                                                    <td class="product-thumbnail">
+                                                        <a href="/detail?id=<%= item.IDProduct %>">
+                                                            <img width="145" height="145"
+                                                                alt="<%= item.NameProduct %>"
+                                                                class="shop_thumbnail"
+                                                                src="/img/<%= item.ImageUrlProduct || 'product-thumb-2.jpg' %>">
+                                                        </a>
+                                                    </td>
+                                                    <td class="product-name">
+                                                        <a href="/detail?id=<%= item.IDProduct %>">
+                                                            <%= item.NameProduct %>
+                                                        </a>
+                                                        <% if (giam > 0) { %>
+                                                            <span class="onsale">-<%= giam %>%</span>
+                                                        <% } %>
+                                                    </td>
+                                                    <td class="product-price">
+                                                        <span class="amount"><strong><%= Number(gia_moi).toLocaleString('vi-VN') %> ₫</strong></span>
+                                                    </td>
+                                                    <td class="product-quantity">
+                                                        <div class="quantity buttons_added" style="display: inline-flex; align-items: center; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+                                                            <button type="button" class="minus btn-qty" data-id="<%= item.IDProduct %>"
+                                                                style="background:#e74c3c; color:white; border:none; width:36px; height:40px; font-size:18px;">−</button>
+                                                            <input type="number"
+                                                                name="qty[<%= item.IDProduct %>]"
+                                                                class="input-text qty text qty-input"
+                                                                value="<%= qty %>"
+                                                                min="1"
+                                                                data-id="<%= item.IDProduct %>"
+                                                                style="width:60px; text-align:center; border:none; height:40px; font-size:16px;"
+                                                                readonly>
+                                                            <button type="button" class="plus btn-qty" data-id="<%= item.IDProduct %>"
+                                                                style="background:#27ae60; color:white; border:none; width:36px; height:40px; font-size:18px;">+</button>
+                                                        </div>
+                                                    </td>
+                                                    <td class="product-subtotal">
+                                                        <span class="amount"><strong><%= Number(tong_tien_item).toLocaleString('vi-VN') %> ₫</strong></span>
+                                                    </td>
+                                                </tr>
+                                    <% }); } %>
+
+                                    <%
+                                      var vat = subtotal * 0.05;
+                                      var orderTotal = subtotal + vat;
+                                    %>
+
+                                        <tr>
+                                            <td class="actions" colspan="6">
+                                                <div style="margin-top: 20px; text-align: right;">
+                                                    <a href="/shop" class="button" style="display:inline-block;padding:10px 16px;text-decoration:none;background:#5cb85c;color:#fff;border-radius:4px;margin:4px;">
+                                                        Tiếp tục mua sắm
+                                                    </a>
+                                                    <a href="/cart/clear" class="button" style="display:inline-block;padding:10px 16px;text-decoration:none;background:#5cb85c;color:#fff;border-radius:4px;margin:4px;"
+                                                        onclick="return confirm('Bạn có chắc muốn xóa toàn bộ giỏ hàng?')">
+                                                        Xóa toàn bộ giỏ hàng
+                                                    </a>
+                                                    <a href="/checkout" class="checkout-button button alt wc-forward" style="display:inline-block;padding:10px 16px;text-decoration:none;background:#5cb85c;color:#fff;border-radius:4px;margin:4px;">
+                                                        Thanh toán →
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </form>
+
+                            <div class="cart-collaterals">
+                                <div class="cross-sells">
+                                    <h2>Bạn có thể quan tâm đến...</h2>
+                                    <ul class="products">
+                                        <li class="product">
+                                            <a href="/shop">
+                                                <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="/img/product-2.jpg">
+                                                <h3>Gửi Ý Tưởng Của Bạn</h3>
+                                                <span class="price"><span class="amount">526.000 ₫</span></span>
+                                            </a>
+                                            <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="/shop">Chọn tùy chọn</a>
+                                        </li>
+
+                                        <li class="product">
+                                            <a href="/shop">
+                                                <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="/img/product-4.jpg">
+                                                <h3>Gửi Ý Tưởng Của Bạn</h3>
+                                                <span class="price"><span class="amount">526.000 ₫</span></span>
+                                            </a>
+                                            <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="/shop">Chọn tùy chọn</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+
+                                
+                                <div class="cart_totals ">
+                                    <h2>Tổng giỏ hàng</h2>
+                                    <table cellspacing="0" class="shop_table shop_table_responsive">
+                                        <tbody>
+                                            <tr class="cart-subtotal">
+                                                <th>Tạm tính</th>
+                                                <td><span class="amount"><%= Number(typeof subtotal !== 'undefined' ? subtotal : 0).toLocaleString('vi-VN') %> ₫</span></td>
+                                            </tr>
+                                            <tr class="tax-rate tax-rate-vat-5">
+                                                <th>VAT (5%)</th>
+                                                <td><span class="amount"><%= Number(typeof vat !== 'undefined' ? vat : 0).toLocaleString('vi-VN') %> ₫</span></td>
+                                            </tr>
+                                            <tr class="shipping">
+                                                <th>Phí vận chuyển</th>
+                                                <td><span class="amount">Miễn phí</span></td>
+                                            </tr>
+                                            <tr class="order-total">
+                                                <th>Tổng cộng</th>
+                                                <td><strong><span class="amount text-danger"><%= Number(typeof orderTotal !== 'undefined' ? orderTotal : 0).toLocaleString('vi-VN') %> ₫</span></strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer-top-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-about-us">
+                        <h2>Zo<span>nanio</span></h2>
+                        <p>Trong thời đại hiện đại, sự tiện lợi và linh hoạt trong việc mua sắm trực tuyến ngày càng trở thành một xu hướng phổ biến. Đối với lĩnh vực điện tử, điện máy, việc tạo ra một website bán hàng chuyên nghiệp không chỉ là một cơ hội kinh doanh mà còn là cách để đáp ứng nhu cầu ngày càng cao của khách hàng.</p>
+                        <div class="footer-social">
+                            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Thanh điều hướng </h2>
+                        <ul>
+                            <li><a href="/my-account">Tài khoản</a></li> <!-- filter -->
+                            <li><a href="/my-orders">Lịch sử mua hàng</a></li> <!-- filter -->
+                            <li><a href="#">Yêu thích</a></li> <!-- filter -->
+                            <li><a href="/contact">Liên hệ</a></li> <!-- filter -->
+                            <li><a href="/">Trang chủ</a></li> <!-- filter -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Danh mục</h2>
+                        <ul>
+                            <li><a href="/shop?cat_id=4">LAPTOP</a></li> <!-- filter -->
+                            <li><a href="/shop?cat_id=3">Phụ Kiện </a></li> <!-- filter -->
+                            <li><a href="/shop?cat_id=1">TV - Điện Máy</a></li> <!-- filter -->
+                            <li><a href="/shop?cat_id=5">Đồng Hồ</a></li> <!-- filter -->
+                            <li><a href="/shop?cat_id=2">PC GAMING</a></li> <!-- filter -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-feedback">
+                        <h2 class="footer-wid-title">Phản hồi</h2>
+                        <p>Vui lòng liên hệ với chúng tôi nếu bạn có bất kỳ thắc mắc, phản hồi hoặc cần hỗ trợ nào. Chúng tôi luôn sẵn lòng trợ giúp!</p>
+                        <div class="feedback-form">
+                            <form action="404.html">
+                                <input type="email" placeholder="Nhập email...">
+                                <input type="submit" value="ĐĂNG KÝ">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End footer top area -->
+
+    <div class="footer-bottom-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="copyright">
+                        <p>&copy; Zonanio. Bản quyền đã được bảo hộ. </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="footer-card-icon">
+                        <i class="fa fa-cc-discover"></i>
+                        <i class="fa fa-cc-mastercard"></i>
+                        <i class="fa fa-cc-paypal"></i>
+                        <i class="fa fa-cc-visa"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End footer bottom area -->
+    <!-- Latest jQuery form server -->
+
+    <div class="floating-contact-wrap">
+
+        <a href="https://zalo.me/0705955589" target="_blank" class="contact-btn btn-zalo">
+            <span class="zalo-text">Z</span>
+            <div class="contact-tooltip">Chat Zalo</div>
+        </a>
+
+        <a href="https://m.me/102803015947076" target="_blank" class="contact-btn btn-messenger">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.03 2 11C2 13.66 3.39 16.05 5.61 17.58L4.99 20.54C4.86 21.13 5.39 21.61 5.95 21.43L9.08 20.41C10.02 20.79 11 21 12 21C17.52 21 22 16.97 22 12C22 7.03 17.52 2 12 2ZM13.06 15.19L10.68 12.63L6.03 15.18C5.69 15.37 5.28 15 5.43 14.64L8.08 8.41C8.25 8.02 8.78 8.02 8.95 8.41L11.32 10.97L15.97 8.42C16.31 8.23 16.72 8.6 16.57 8.96L13.92 15.19C13.75 15.58 13.22 15.58 13.06 15.19Z" />
+                </path>
+            </svg>
+            <div class="contact-tooltip">Chat Facebook</div>
+        </a>
+
+    </div>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+
+    <!-- Bootstrap JS form CDN -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- jQuery sticky menu -->
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/jquery.sticky.js"></script>
+
+    <!-- jQuery easing -->
+    <script src="/js/jquery.easing.1.3.min.js"></script>
+
+    <!-- Main Script -->
+    <script src="//js/main.js"></script>
+
+    <!-- Slider -->
+    <script type="text/javascript" src="/js/bxslider.min.js"></script>
+    <script type="text/javascript" src="/js/script.slider.js"></script>
+
+    <!-- Main Script -->
+    <script src="/js/main.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.btn-qty', function(e) {
+                e.preventDefault();
+
+                var $button = $(this);
+                var $input = $button.closest('.quantity').find('.qty-input');
+                var IDProduct = $input.data('id'); // Giả sử bạn đã sửa data-id
+                var oldValue = parseInt($input.val(), 10) || 1;
+                var newVal = $button.hasClass('plus') ? oldValue + 1 : Math.max(1, oldValue - 1);
+
+                if (!IDProduct) {
+                    console.error('Missing IDProduct!');
+                    return;
+                }
+
+                console.log('Updating:', {
+                    IDProduct,
+                    oldValue,
+                    newVal
+                });
+
+                $input.val(newVal);
+
+                $.ajax({
+                    url: '/cart/update-qty',
+                    method: 'POST',
+                    data: {
+                        IDProduct: IDProduct,
+                        product_id: IDProduct,
+                        quantity: newVal
+                    },
+                    dataType: 'json',
+                    success: function(res) {
+                        console.log('Success response:', res);
+                        if (res.success) {
+                            location.reload();
+                        } else {
+                            alert('Cập nhật thất bại: ' + (res.message || 'Unknown error'));
+                            $input.val(oldValue);
+                        }
+                    },
+                    error: function(xhr, status, err) {
+                        console.error('AJAX Error:', {
+                            status,
+                            err,
+                            response: xhr.responseText
+                        });
+                        alert('Lỗi kết nối server: ' + status + ' - ' + err);
+                        $input.val(oldValue);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

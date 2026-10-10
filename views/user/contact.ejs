@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contact</title>
+    <link rel="icon" type="image/png" href="/img/letter-z.png">
+
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    </head>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/css/grid.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="header-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="user-menu">
+                        <ul>
+                            <li><a href="/my-account"><i class="fa fa-user"></i> Tài Khoản</a></li>
+                            <li><a href="#"><i class="fa fa-heart"></i> Yêu Thích</a></li>
+                            <li><a href="/cart"><i class="fa fa-user"></i> Giỏ Hàng</a></li>
+                            <li><a href="/checkout"><i class="fa fa-money"></i> Thanh Toán</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End header area -->
+    <div class="site-branding-area1">
+        <div class="container1">
+            <div class="row1">
+                <div class="header-left">
+                    <div class="logo1">
+                        <a href="/">
+                            <img src="/img/logo.jpg" alt="Logo" />
+                        </a>
+                    </div>
+
+                    <div class="search">
+                        <form action="/search" method="GET" style="display: flex;">
+                            <input type="text" name="keyword" placeholder="Tìm kiếm tại đây..." required
+                                value="<%= typeof keyword !== 'undefined' ? keyword : '' %>" />
+                            <button style="background-color: #5cb85c; color: white; padding: 8px 16px; border: none; border-radius: 50px;">Tìm kiếm</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <!-- <div class="col-sm-6"> -->
+                    <div class="shopping-item">
+                    
+
+                    <a href="/cart">
+                        Giỏ hàng <i class="fa fa-shopping-cart"></i>
+                        <span class="product-count"><%= typeof totalQty !== 'undefined' ? totalQty : 0 %></span>
+                    </a>
+                </div>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </div> <!-- End site branding area -->
+
+    <div class="mainmenu-area">
+        <div class="container">
+            <div class="row">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Trang chủ</a></li>
+                        <li><a href="/shop">Cửa hàng</a></li>
+                        <li><a href="/about">Giới thiệu</a></li>
+                        <li class="active"><a href="/contact">Liên hệ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End mainmenu area -->
+    <div class="container-au">
+        <div class="contact-page">
+            <section class="contact-hero">
+                <div class="grid wide">
+                    <div class="contact-hero__content">
+                        <h1 class="contact-hero__title">Liên hệ với chúng tôi</h1>
+                        <p class="contact-hero__subtitle">Chúng tôi luôn sẵn sàng hỗ trợ bạn. Hãy liên hệ với TechStore để được tư vấn và giải đáp mọi thắc mắc về sản phẩm và dịch vụ.</p>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="contact-main">
+                <div class="grid wide">
+                    <div class="row-au">
+
+                        <div class="col l-7 m-12 c-12">
+                            <div class="contact-form-card">
+                                <h2 class="contact-form__title">
+                                    <i class="far fa-comment-dots"></i>
+                                    Gửi tin nhắn cho chúng tôi
+                                </h2>
+
+
+                                <form action="..." method="POST" class="contact-form">
+                                    <input type="hidden" name="_token" value="og1ArW0zGHi7zmdUTSVRcopG6Y4aaoeYqN0X4wfU" autocomplete="off">
+                                    <div class="form-row">
+                                        <div class="form-col">
+                                            <label for="name" class="form-label">Họ và tên <span class="required">*</span></label>
+                                            <input type="text"
+                                                name="name"
+                                                id="name"
+                                                class="form-control "
+                                                placeholder="Nguyễn Văn A"
+                                                value=""
+                                                required>
+                                        </div>
+
+                                        <div class="form-col">
+                                            <label for="phone" class="form-label">Số điện thoại</label>
+                                            <input type="tel"
+                                                name="phone"
+                                                id="phone"
+                                                class="form-control "
+                                                placeholder="0901234567"
+                                                value="">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email" class="form-label">Email <span class="required">*</span></label>
+                                        <input type="email"
+                                            name="email"
+                                            id="email"
+                                            class="form-control "
+                                            placeholder="example@email.com"
+                                            value=""
+                                            required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="subject" class="form-label">Chủ đề <span class="required">*</span></label>
+                                        <input type="text"
+                                            name="subject"
+                                            id="subject"
+                                            class="form-control "
+                                            placeholder="Tư vấn sản phẩm, hỗ trợ kỹ thuật..."
+                                            value=""
+                                            required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="message" class="form-label">Nội dung tin nhắn <span class="required">*</span></label>
+                                        <textarea name="message"
+                                            id="message"
+                                            rows="6"
+                                            class="form-control "
+                                            placeholder="Mô tả chi tiết yêu cầu của bạn..."
+                                            required></textarea>
+                                    </div>
+
+                                    <button type="submit" class="btn-submit">
+                                        <i class="fas fa-paper-plane"></i>
+                                        Gửi tin nhắn
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+
+                        <div class="col l-5 m-12 c-12">
+
+                            <div class="contact-info-card">
+                                <h3 class="contact-info__title">Thông tin liên hệ</h3>
+
+                                <div class="info-item">
+                                    <div class="info-item__icon">
+                                        <i class="fas fa-phone-alt"></i>
+                                    </div>
+                                    <div class="info-item__content">
+                                        <h4>Điện thoại</h4>
+                                        <p>+84 123456789</p>
+                                        <p>+84 987654321</p>
+                                    </div>
+                                </div>
+
+                                <div class="info-item">
+                                    <div class="info-item__icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div class="info-item__content">
+                                        <h4>E-mail</h4>
+                                        <p>contact@techstore.vn</p>
+                                        <p>support@techstore.vn</p>
+                                    </div>
+                                </div>
+
+                                <div class="info-item">
+                                    <div class="info-item__icon">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <div class="info-item__content">
+                                        <h4>Địa chỉ</h4>
+                                        <p>470 Trần Đại Nghĩa</p>
+                                        <p>TP.Đà Nẵng</p>
+                                    </div>
+                                </div>
+
+                                <div class="info-item">
+                                    <div class="info-item__icon">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div class="info-item__content">
+                                        <h4>Giờ làm việc</h4>
+                                        <p>Thứ 2 - Thứ 6: 8:00 - 18:00</p>
+                                        <p>Thứ 7 - CN: 9:00 - 17:00</p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="quick-support-card">
+                                <h3 class="quick-support__title">Hỗ trợ nhanh</h3>
+
+                                <a href="tel:1900-1234" class="support-btn support-btn--hotline">
+                                    <i class="fas fa-phone"></i>
+                                    <span>Gọi hotline: 1900-1234</span>
+                                </a>
+
+                                <a href="#" class="support-btn support-btn--chat">
+                                    <i class="fas fa-comments"></i>
+                                    <span>Trò chuyện trực tuyến</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="contact-faq">
+                <div class="grid wide">
+                    <h2 class="section-title">Câu hỏi thường gặp</h2>
+                    <p class="section-subtitle">Tìm câu trả lời nhanh chóng cho những câu hỏi phổ biến nhất</p>
+
+                    <div class="row-au">
+                        <div class="col l-6 m-12 c-12">
+                            <div class="faq-item">
+                                <h3 class="faq-question">
+                                    <i class="fas fa-question-circle"></i>
+                                    Làm thế nào để theo dõi đơn hàng?
+                                </h3>
+                                <p class="faq-answer">Bạn có thể theo dõi đơn hàng bằng cách đăng nhập vào tài khoản và truy cập mục "Đơn hàng của tôi".</p>
+                            </div>
+                        </div>
+
+                        <div class="col l-6 m-12 c-12">
+                            <div class="faq-item">
+                                <h3 class="faq-question">
+                                    <i class="fas fa-question-circle"></i>
+                                    Chính sách trả lại như thế nào?
+                                </h3>
+                                <p class="faq-answer">Chúng tôi hỗ trợ trả lại toàn bộ trong vòng 7 ngày kể từ khi nhận hàng với sản phẩm điều kiện còn nguyên seal.</p>
+                            </div>
+                        </div>
+
+                        <div class="col l-6 m-12 c-12">
+                            <div class="faq-item">
+                                <h3 class="faq-question">
+                                    <i class="fas fa-question-circle"></i>
+                                    Sản phẩm có bảo hành không?
+                                </h3>
+                                <p class="faq-answer">Tất cả sản phẩm đều được bảo hành chính hãng từ 12-24 tháng tùy theo từng sản phẩm.</p>
+                            </div>
+                        </div>
+
+                        <div class="col l-6 m-12 c-12">
+                            <div class="faq-item">
+                                <h3 class="faq-question">
+                                    <i class="fas fa-question-circle"></i>
+                                    Hỗ trợ thanh toán trực tuyến?
+                                </h3>
+                                <p class="faq-answer">Có, chúng tôi hỗ trợ thanh toán qua ZaloPay, MoMo và các thẻ Visa/Mastercard.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="contact-map">
+                <div class="grid wide">
+                    <h2 class="section-title">Vị trí của chúng tôi</h2>
+                    <div class="map-wrapper">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2443.5197434518554!2d108.25335632080157!3d15.976075216777728!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3142108997dc971f%3A0x1295cb3d313469c9!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBDw7RuZyBuZ2jhu4cgVGjDtG5nIHRpbiB2w6AgVHJ1eeG7gW4gdGjDtG5nIFZp4buHdCAtIEjDoG4sIMSQ4bqhaSBo4buNYyDEkMOgIE7hurVuZw!5e1!3m2!1svi!2s!4v1765175779223!5m2!1svi!2s"
+                            width="100%"
+                            height="450"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="footer-top-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-about-us">
+                        <h2>Zo<span>nanio</span></h2>
+                        <p>Trong thời đại hiện đại, sự tiện lợi và linh hoạt trong việc mua sắm trực tuyến ngày càng trở thành một xu hướng phổ biến. Đối với lĩnh vực điện tử, điện máy, việc tạo ra một website bán hàng chuyên nghiệp không chỉ là một cơ hội kinh doanh mà còn là cách để đáp ứng nhu cầu ngày càng cao của khách hàng.</p>
+                        <div class="footer-social">
+                            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                <div class="footer-menu">
+                    <h2 class="footer-wid-title">Thanh điều hướng </h2>
+                    <ul>
+                        <li><a href="/my-account">Tài khoản</a></li> <!-- filter -->
+                        <li><a href="/my-orders">Lịch sử mua hàng</a></li> <!-- filter -->
+                        <li><a href="#">Yêu thích</a></li> <!-- filter -->
+                        <li><a href="/contact">Liên hệ</a></li> <!-- filter -->
+                        <li><a href="/">Trang chủ</a></li> <!-- filter -->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="footer-menu">
+                    <h2 class="footer-wid-title">Danh mục</h2>
+                    <ul>
+                        <li><a href="/shop?cat_id=4">LAPTOP</a></li> <!-- filter -->
+                        <li><a href="/shop?cat_id=3">Phụ Kiện </a></li> <!-- filter -->
+                        <li><a href="/shop?cat_id=1">TV - Điện Máy</a></li> <!-- filter -->
+                        <li><a href="/shop?cat_id=5">Đồng Hồ</a></li> <!-- filter -->
+                        <li><a href="/shop?cat_id=2">PC GAMING</a></li> <!-- filter -->
+                    </ul>
+                </div>
+            </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-feedback">
+                        <h2 class="footer-wid-title">Phản hồi</h2>
+                        <p>Vui lòng liên hệ với chúng tôi nếu bạn có bất kỳ thắc mắc, phản hồi hoặc cần hỗ trợ nào. Chúng tôi luôn sẵn lòng trợ giúp!</p>
+                        <div class="feedback-form">
+                            <form action="404.html">
+                                <input type="email" placeholder="Nhập email...">
+                                <input type="submit" value="ĐĂNG KÝ">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End footer top area -->
+
+    <div class="footer-bottom-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="copyright">
+                        <p>&copy; Zonanio. Bản quyền đã được bảo hộ. </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="footer-card-icon">
+                        <i class="fa fa-cc-discover"></i>
+                        <i class="fa fa-cc-mastercard"></i>
+                        <i class="fa fa-cc-paypal"></i>
+                        <i class="fa fa-cc-visa"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End footer bottom area -->
+    <!-- Latest jQuery form server -->
+
+    <div class="floating-contact-wrap">
+
+        <a href="https://zalo.me/0705955589" target="_blank" class="contact-btn btn-zalo">
+            <span class="zalo-text">Z</span>
+            <div class="contact-tooltip">Chat Zalo</div>
+        </a>
+
+        <a href="https://m.me/102803015947076" target="_blank" class="contact-btn btn-messenger">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.03 2 11C2 13.66 3.39 16.05 5.61 17.58L4.99 20.54C4.86 21.13 5.39 21.61 5.95 21.43L9.08 20.41C10.02 20.79 11 21 12 21C17.52 21 22 16.97 22 12C22 7.03 17.52 2 12 2ZM13.06 15.19L10.68 12.63L6.03 15.18C5.69 15.37 5.28 15 5.43 14.64L8.08 8.41C8.25 8.02 8.78 8.02 8.95 8.41L11.32 10.97L15.97 8.42C16.31 8.23 16.72 8.6 16.57 8.96L13.92 15.19C13.75 15.58 13.22 15.58 13.06 15.19Z" />
+                </path>
+            </svg>
+            <div class="contact-tooltip">Chat Facebook</div>
+        </a>
+
+    </div>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+
+    <!-- Bootstrap JS form CDN -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- jQuery sticky menu -->
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/jquery.sticky.js"></script>
+
+    <!-- jQuery easing -->
+    <script src="/js/jquery.easing.1.3.min.js"></script>
+
+    <!-- Main Script -->
+    <script src="/js/main.js"></script>
+
+    <!-- Slider -->
+    <script type="text/javascript" src="/js/bxslider.min.js"></script>
+    <script type="text/javascript" src="/js/script.slider.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // Lấy các elements
+            const navbarSearch = document.querySelector('.navbar__search');
+            const searchBtn = document.querySelector('.navbar__search-btn');
+            const searchInput = document.querySelector('.navbar__search-input');
+
+            // Kiểm tra có phải mobile không
+            function isMobile() {
+                return window.innerWidth < 740;
+            }
+
+            // Click vào button search (icon kính lúp)
+            if (searchBtn && navbarSearch) {
+                searchBtn.addEventListener('click', function(e) {
+
+                    // CHỈ xử lý trên mobile
+                    if (isMobile()) {
+                        e.preventDefault(); // Ngăn submit
+
+                        // Toggle class active
+                        if (navbarSearch.classList.contains('active')) {
+                            // Đang mở → Đóng lại
+                            navbarSearch.classList.remove('active');
+                            searchInput.blur();
+                        } else {
+                            // Đang đóng → Mở ra (xuống dưới)
+                            navbarSearch.classList.add('active');
+
+                            // Focus vào input sau animation
+                            setTimeout(() => {
+                                searchInput.focus();
+                            }, 300);
+                        }
+                    }
+                    // Trên tablet/desktop (>= 740px): giữ nguyên hành vi mặc định (submit search)
+                });
+            }
+
+            // Click vào overlay/ngoài search để đóng (chỉ trên mobile)
+            document.addEventListener('click', function(e) {
+                if (isMobile() && navbarSearch && navbarSearch.classList.contains('active')) {
+                    // Nếu click không phải vào search box
+                    if (!navbarSearch.contains(e.target)) {
+                        navbarSearch.classList.remove('active');
+                        searchInput.blur();
+                    }
+                }
+            });
+
+            // Nhấn ESC để đóng search
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isMobile() && navbarSearch && navbarSearch.classList.contains('active')) {
+                    navbarSearch.classList.remove('active');
+                    searchInput.blur();
+                }
+            });
+
+            // Xử lý khi resize window
+            let resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    // Nếu chuyển từ mobile sang tablet/desktop thì đóng search
+                    if (!isMobile() && navbarSearch && navbarSearch.classList.contains('active')) {
+                        navbarSearch.classList.remove('active');
+                    }
+                }, 250);
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // ========================================
+            // ANIMATION KHI SCROLL
+            // ========================================
+            function revealOnScroll(containerId) {
+                const items = document.querySelectorAll(containerId + ' .product-item');
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('show');
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.1
+                });
+
+                items.forEach(item => observer.observe(item));
+            }
+
+            // ========================================
+            // LOAD TRANG BẰNG AJAX (KHÔNG RELOAD)
+            // ========================================
+            function loadPage(url, containerId) {
+                // Lưu vị trí scroll hiện tại
+                const currentScrollY = window.scrollY;
+
+                // Hiện loading (optional)
+                const container = document.querySelector(containerId);
+                container.style.opacity = '0.5';
+                container.style.pointerEvents = 'none';
+
+                fetch(url, {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network error');
+                        return response.text();
+                    })
+                    .then(html => {
+                        // Parse HTML response
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+
+                        // Lấy phần content mới
+                        const newContent = doc.querySelector(containerId);
+
+                        if (newContent) {
+                            // Thay thế content
+                            container.innerHTML = newContent.innerHTML;
+
+                            // Reset style
+                            container.style.opacity = '1';
+                            container.style.pointerEvents = 'auto';
+
+                            // Animate sản phẩm mới
+                            revealOnScroll(containerId);
+
+                            // Giữ nguyên vị trí scroll
+
+
+                            const containerTop = container.offsetTop - 100; // -100px để có khoảng cách
+                            window.scrollTo({
+                                top: containerTop,
+                                behavior: 'smooth'
+                            });
+
+                            // Update URL (optional - không reload page)
+                            window.history.pushState({}, '', url);
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error loading page:', err);
+                        container.style.opacity = '1';
+                        container.style.pointerEvents = 'auto';
+                        alert('Có lỗi xảy ra khi tải trang. Vui lòng thử lại.');
+                    });
+            }
+
+            // ========================================
+            // XỬ LÝ CLICK PAGINATION
+            // ========================================
+
+            // Pagination cho Featured Products
+            function handleFeaturedPagination(e) {
+                // Kiểm tra xem có phải link pagination không
+                const link = e.target.closest('a');
+                if (!link) return;
+
+                const paginationWrapper = link.closest('.pagination-wrapper');
+                if (!paginationWrapper) return;
+
+                // Chỉ xử lý nếu trong container featured products
+                const featuredContainer = link.closest('#featured-products-container');
+                if (!featuredContainer) return;
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                const url = link.getAttribute('href');
+                if (url && url !== '#') {
+                    loadPage(url, '#featured-products-container');
+                }
+            }
+
+            // Pagination cho All Products
+            function handleAllPagination(e) {
+                const link = e.target.closest('a');
+                if (!link) return;
+
+                const paginationWrapper = link.closest('.pagination-wrapper');
+                if (!paginationWrapper) return;
+
+                const allContainer = link.closest('#all-products-container');
+                if (!allContainer) return;
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                const url = link.getAttribute('href');
+                if (url && url !== '#') {
+                    loadPage(url, '#all-products-container');
+                }
+            }
+
+            // Gắn sự kiện
+            const featuredContainer = document.querySelector('#featured-products-container');
+            const allContainer = document.querySelector('#all-products-container');
+
+            if (featuredContainer) {
+                featuredContainer.addEventListener('click', handleFeaturedPagination);
+            }
+
+            if (allContainer) {
+                allContainer.addEventListener('click', handleAllPagination);
+            }
+
+            // ========================================
+            // ANIMATE PRODUCTS KHI LOAD LẦN ĐẦU
+            // ========================================
+            revealOnScroll('#featured-products-container');
+            revealOnScroll('#all-products-container');
+
+            // ========================================
+            // XỬ LÝ NÚT BACK/FORWARD CỦA TRÌNH DUYỆT
+            // ========================================
+            window.addEventListener('popstate', function(e) {
+                location.reload(); // Reload khi người dùng nhấn back/forward
+            });
+
+        });
+    </script>
+
+
+
+
+    <script>
+
+    </script>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const searchForm = document.getElementById('search-form');
+            const searchInput = document.getElementById('search-input');
+            const searchResults = document.getElementById('search-results');
+            let searchTimeout;
+
+            // Live Search (gõ xong 500ms mới search)
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    clearTimeout(searchTimeout);
+                    const keyword = this.value.trim();
+
+                    if (keyword.length >= 2) {
+                        searchTimeout = setTimeout(() => liveSearch(keyword), 500);
+                    } else {
+                        searchResults.style.display = 'none';
+                    }
+                });
+            }
+
+            // Hàm tìm kiếm live
+            function liveSearch(keyword) {
+                fetch(`https://lesybach.id.vn/search?keyword=${encodeURIComponent(keyword)}`, {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(data.all, 'text/html');
+                        const products = doc.querySelectorAll('.product-item');
+
+                        if (products.length === 0) {
+                            searchResults.innerHTML = '<div class="search-no-results">Không tìm thấy sản phẩm nào</div>';
+                        } else {
+                            let resultsHTML = '';
+                            products.forEach((product, index) => {
+                                if (index < 5) {
+                                    const link = product.querySelector('a')?.href || '#';
+                                    const img = product.querySelector('.product-item__img')?.src || '';
+                                    const name = product.querySelector('.product-item__name')?.textContent || '';
+                                    const price = product.querySelector('.product-item__price-current')?.textContent || '';
+
+                                    resultsHTML += `
+                            <a href="${link}" class="search-result-item">
+                                <img src="${img}" alt="${name}" class="search-result-img">
+                                <div class="search-result-info">
+                                    <div class="search-result-name">${name}</div>
+                                    <div class="search-result-price">${price}</div>
+                                </div>
+                            </a>
+                        `;
+                                }
+                            });
+
+                            if (products.length > 5) {
+                                resultsHTML += `<div style="padding: 10px; text-align: center; background: #f5f5f5;">
+                        <small>Và ${products.length - 5} sản phẩm khác...</small>
+                    </div>`;
+                            }
+
+                            searchResults.innerHTML = resultsHTML;
+                        }
+
+                        searchResults.style.display = 'block';
+                    })
+                    .catch(err => {
+                        console.error('Search error:', err);
+                    });
+            }
+
+            // Submit form search
+            if (searchForm) {
+                searchForm.addEventListener('submit', function(e) {
+                    const keyword = searchInput.value.trim();
+
+                    if (keyword.length < 2) {
+                        e.preventDefault();
+                        alert('Vui lòng nhập ít nhất 2 ký tự');
+                    }
+
+                    searchResults.style.display = 'none';
+                });
+            }
+
+            // Đóng dropdown khi click bên ngoài
+            document.addEventListener('click', function(e) {
+                if (!searchForm.contains(e.target)) {
+                    searchResults.style.display = 'none';
+                }
+            });
+
+            // Đóng dropdown khi nhấn ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    searchResults.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+<style>
+    /* ======================================================== */
+    /* CONTACT PAGE STYLES */
+    /* ======================================================== */
+
+    :root {
+        --primary: #00877c;
+        --primary-dark: #1bd172;
+        --primary-light: #e0f2f1;
+        --success: #4caf50;
+        --text-dark: #2c3e50;
+        --text-light: #6c757d;
+        --border: #e0e0e0;
+        --bg-light: #f8f9fa;
+        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+        --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-page {
+        background: #fff;
+    }
+
+    /* ===== HERO SECTION ===== */
+    .contact-hero {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        padding: 80px 0 60px;
+        text-align: center;
+        color: #fff;
+    }
+
+    .contact-hero__title {
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .contact-hero__subtitle {
+        font-size: 16px;
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.6;
+        opacity: 0.95;
+    }
+
+    /* ===== MAIN SECTION ===== */
+    .contact-main {
+        padding: 80px 0;
+        background: var(--bg-light);
+    }
+
+    /* ===== FORM CARD ===== */
+    .contact-form-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 40px;
+        box-shadow: var(--shadow-md);
+        margin-bottom: 30px;
+    }
+
+    .contact-form__title {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .contact-form__title i {
+        color: var(--primary);
+        font-size: 26px;
+    }
+
+    /* Alert */
+    .alert {
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .alert-success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .alert i {
+        font-size: 20px;
+    }
+
+    /* Form */
+    .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .form-col {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 8px;
+    }
+
+    .required {
+        color: #dc3545;
+    }
+
+    .form-control {
+        padding: 14px 16px;
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        background: #fff;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(0, 150, 136, 0.1);
+    }
+
+    .form-control::placeholder {
+        color: #aaa;
+    }
+
+    .form-control.is-invalid {
+        border-color: #dc3545;
+    }
+
+    .error-message {
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 5px;
+    }
+
+    textarea.form-control {
+        resize: vertical;
+        font-family: inherit;
+    }
+
+    .btn-submit {
+        padding: 16px 40px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        box-shadow: 0 4px 12px rgba(0, 150, 136, 0.3);
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 150, 136, 0.4);
+    }
+
+    /* ===== INFO CARD ===== */
+    .contact-info-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 35px 30px;
+        box-shadow: var(--shadow-md);
+        margin-bottom: 25px;
+    }
+
+    .contact-info__title {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 30px;
+    }
+
+    .info-item {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 30px;
+        padding-bottom: 25px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .info-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .info-item__icon {
+        width: 50px;
+        height: 50px;
+        background: var(--primary-light);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .info-item__icon i {
+        font-size: 22px;
+        color: var(--primary);
+    }
+
+    .info-item__content h4 {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 8px;
+    }
+
+    .info-item__content p {
+        font-size: 14px;
+        color: var(--text-light);
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    /* ===== QUICK SUPPORT CARD ===== */
+    .quick-support-card {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: var(--shadow-md);
+    }
+
+    .quick-support__title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    .support-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 20px;
+        background: #fff;
+        border-radius: 8px;
+        text-decoration: none;
+        margin-bottom: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .support-btn:last-child {
+        margin-bottom: 0;
+    }
+
+    .support-btn--hotline {
+        color: var(--primary);
+    }
+
+    .support-btn--chat {
+        color: var(--success);
+    }
+
+    .support-btn:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .support-btn i {
+        font-size: 20px;
+    }
+
+    .support-btn span {
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    /* ===== FAQ SECTION ===== */
+    .contact-faq {
+        padding: 80px 0;
+        background: #fff;
+    }
+
+    .section-title {
+        font-size: 36px;
+        font-weight: 700;
+        color: var(--text-dark);
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .section-subtitle {
+        font-size: 16px;
+        color: var(--text-light);
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .faq-item {
+        background: var(--bg-light);
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .faq-item:hover {
+        box-shadow: var(--shadow-sm);
+        transform: translateY(-2px);
+    }
+
+    .faq-question {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .faq-question i {
+        color: var(--primary);
+        font-size: 20px;
+    }
+
+    .faq-answer {
+        font-size: 15px;
+        color: var(--text-light);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    /* ===== MAP SECTION ===== */
+    .contact-map {
+        padding: 80px 0;
+        background: var(--bg-light);
+    }
+
+    .map-wrapper {
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+        margin-top: 30px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1023px) {
+
+        .contact-info-card,
+        .quick-support-card {
+            margin-top: 30px;
+        }
+    }
+
+    @media (max-width: 739px) {
+        .contact-hero {
+            padding: 60px 0 40px;
+        }
+
+        .contact-hero__title {
+            font-size: 32px;
+        }
+
+        .contact-hero__subtitle {
+            font-size: 14px;
+        }
+
+        .contact-main,
+        .contact-faq,
+        .contact-map {
+            padding: 50px 0;
+        }
+
+        .contact-form-card {
+            padding: 25px 20px;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        .section-title {
+            font-size: 28px;
+        }
+
+        .btn-submit {
+            width: 100%;
+        }
+    }
+</style>
+<script>
+    tag
+        // ============================================
+        <
+        script >
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // Lấy các elements
+            const navbarSearch = document.querySelector('.navbar__search');
+            const searchBtn = document.querySelector('.navbar__search-btn');
+            const searchInput = document.querySelector('.navbar__search-input');
+
+            // Kiểm tra có phải mobile không
+            function isMobile() {
+                return window.innerWidth < 740;
+            }
+
+            // Click vào button search (icon kính lúp)
+            if (searchBtn && navbarSearch) {
+                searchBtn.addEventListener('click', function(e) {
+
+                    // CHỈ xử lý trên mobile
+                    if (isMobile()) {
+                        e.preventDefault(); // Ngăn submit
+
+                        // Toggle class active
+                        if (navbarSearch.classList.contains('active')) {
+                            // Đang mở → Đóng lại
+                            navbarSearch.classList.remove('active');
+                            searchInput.blur();
+                        } else {
+                            // Đang đóng → Mở ra (xuống dưới)
+                            navbarSearch.classList.add('active');
+
+                            // Focus vào input sau animation
+                            setTimeout(() => {
+                                searchInput.focus();
+                            }, 300);
+                        }
+                    }
+                    // Trên tablet/desktop (>= 740px): giữ nguyên hành vi mặc định (submit search)
+                });
+            }
+
+            // Click vào overlay/ngoài search để đóng (chỉ trên mobile)
+            document.addEventListener('click', function(e) {
+                if (isMobile() && navbarSearch && navbarSearch.classList.contains('active')) {
+                    // Nếu click không phải vào search box
+                    if (!navbarSearch.contains(e.target)) {
+                        navbarSearch.classList.remove('active');
+                        searchInput.blur();
+                    }
+                }
+            });
+
+            // Nhấn ESC để đóng search
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isMobile() && navbarSearch && navbarSearch.classList.contains('active')) {
+                    navbarSearch.classList.remove('active');
+                    searchInput.blur();
+                }
+            });
+
+            // Xử lý khi resize window
+            let resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    // Nếu chuyển từ mobile sang tablet/desktop thì đóng search
+                    if (!isMobile() && navbarSearch && navbarSearch.classList.contains('active')) {
+                        navbarSearch.classList.remove('active');
+                    }
+                }, 250);
+            });
+        });
+</script>
+
+</html>
