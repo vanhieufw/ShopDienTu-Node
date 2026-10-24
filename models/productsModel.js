@@ -199,14 +199,20 @@ class ProductsModel {
   }
 
   async getOrderDetails(orderId) {
-    const [rows] = await pool.query(`
-      SELECT od.*, p.NameProduct, p.ImageUrlProduct
-      FROM order_details od
-      LEFT JOIN products p ON od.IDProduct = p.IDProduct
-      WHERE od.IDOrder = ?
-    `, [orderId]);
-    return rows;
-  }
+  const [rows] = await pool.query(`
+    SELECT 
+      od.*,
+      p.NameProduct,
+      p.ImageUrlProduct,
+      od.QuantityOrderDetail AS Quantity,
+      od.UnitPriceOrderDetail AS UnitPrice,
+      od.SubtotalOrderDetail AS Subtotal
+    FROM order_details od
+    LEFT JOIN products p ON od.IDProduct = p.IDProduct
+    WHERE od.IDOrder = ?
+  `, [orderId]);
+  return rows;
+}
 
   async updateOrderStatus(id, status) {
     await pool.query(`UPDATE orders SET StatusOrder = ? WHERE IDOrder = ?`, [status, id]);
