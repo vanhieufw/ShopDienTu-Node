@@ -271,28 +271,8 @@
                     <div style="font-size: 18px; font-weight: bold;">#<%= order.OrderCode %></div>
                 </div>
             </div>
-            <% stt = trim(order.StatusOrder);
-            step1 = step2 = step3 = step4 = '';
 
-            if (stt != 'Đã hủy') {
-                step1 = 'active';
-
-                if (stt == 'Chờ xác nhận') {
-                    // Chỉ step 1 active
-                } elseif (stt == 'Đang chuẩn bị hàng') {
-                    step2 = 'active';
-                } elseif (stt == 'Đang vận chuyển' || stt == 'Đang giao hàng') {
-                    step2 = 'active';
-                    step3 = 'active';
-                } elseif (stt == 'Hoàn thành' || stt == 'Giao hàng thành công') {
-                    step2 = 'active';
-                    step3 = 'active';
-                    step4 = 'active';
-                }
-            } else {
-            } %>
-
-            <% if (stt != 'Đã hủy'): %>
+            <% if (stt !== "Đã hủy") { %>
                 <div class="progress-track">
                     <div class="step <%= step1 %>">
                         <div class="step-icon">1</div>
@@ -350,7 +330,7 @@
                     </div>
                     <div class="info-item">
                         <span class="info-label">Ghi chú:</span>
-                        <span class="info-value"><?= !empty($order['Note']) ? $order['Note'] : 'Không có' %></span>
+                        <span class="info-value"><%= order.Note ? order.Note : 'Không có' %></span>
                     </div>
                 </div>
             </div>
@@ -371,14 +351,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% (items || []).forEach(function(item) { %>%>
+                    <% (details || items || []).forEach(function(item) { %>
                         <tr>
                             <td>
                                 <div class="product-name"><%= item.NameProduct %></div>
                             </td>
-                            <td class="text-right"><%= Number(item.UnitPriceOrderDetail).toLocaleString("vi-VN") %>đ</td>
+                            <td class="text-right"><%= Number(item.UnitPriceOrderDetail || 0).toLocaleString("vi-VN") %>đ</td>
                             <td class="text-center">x<%= item.QuantityOrderDetail %></td>
-                            <td class="text-right"><%= Number(item.SubtotalOrderDetail).toLocaleString("vi-VN") %>đ</td>
+                            <td class="text-right"><%= Number(item.SubtotalOrderDetail || 0).toLocaleString("vi-VN") %>đ</td>
                         </tr>
                     <% }) %>
                 </tbody>
@@ -389,20 +369,20 @@
                 <div>
                     <div class="total-row">
                         <span class="text-muted">Tổng tiền hàng:</span>
-                        <span><%= Number(order.TotalAmountOrder).toLocaleString("vi-VN") %>đ</span>
+                        <span><%= Number(order.TotalAmountOrder || 0).toLocaleString("vi-VN") %>đ</span>
                     </div>
                     <!-- Có thể thêm dòng Phí vận chuyển ở đây nếu DB có -->
 
                     <div class="total-row grand-total">
                         <span>Thành tiền:</span>
-                        <span><%= Number(order.TotalAmountOrder).toLocaleString("vi-VN") %>đ</span>
+                        <span><%= Number(order.TotalAmountOrder || 0).toLocaleString("vi-VN") %>đ</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- 4. ACTION (Hủy đơn) -->
-        <% if (stt == 'Chờ xác nhận'): %>
+        <% if (stt === 'Chờ xác nhận') { %>
             <div style="margin-bottom: 50px; overflow: hidden;">
                 <!-- Form hoặc Link xử lý hủy đơn -->
                 <a href="/cancel-order?id=<%= order.IDOrder %>"

@@ -88,7 +88,7 @@ router.get("/detail", async (req, res) => {
     if (!product) return res.redirect("/");
     if (!req.session.recentlyViewed) req.session.recentlyViewed = [];
     const exists = req.session.recentlyViewed.findIndex(
-      (p) => String(p.IDProduct) === String(product.IDProduct)
+      (p) => String(p.IDProduct) === String(product.IDProduct),
     );
     if (exists >= 0) req.session.recentlyViewed.splice(exists, 1);
     req.session.recentlyViewed.unshift({
@@ -135,7 +135,7 @@ router.post("/submit-review", requireLogin, async (req, res) => {
 });
 
 router.get("/login", (req, res) =>
-  res.render("Login", { error: null, session: req.session })
+  res.render("Login", { error: null, session: req.session }),
 );
 
 router.post("/login", async (req, res) => {
@@ -165,7 +165,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/register", (req, res) =>
-  res.render("Register", { error: null, session: req.session })
+  res.render("Register", { error: null, session: req.session }),
 );
 
 router.post("/register", async (req, res) => {
@@ -187,7 +187,7 @@ router.post("/register", async (req, res) => {
       BirthDay,
       PhoneNumberUser,
       EmailUser || "",
-      PasswordHashUser
+      PasswordHashUser,
     );
     res.redirect("/login");
   } catch (e) {
@@ -306,7 +306,7 @@ router.get("/checkout", requireLogin, async (req, res) => {
   }
 });
 
-// Hàm xử lý đặt hàng dùng chung cho /checkout và /place-order
+// Hàm xử lý đặt hàng – ĐÃ SỬA LỖI SỐ LƯỢNG & TIỀN
 async function handlePlaceOrder(req, res) {
   try {
     console.log("===== ORDER BODY =====");
@@ -343,21 +343,28 @@ async function handlePlaceOrder(req, res) {
     }
 
     const fullAddress = `${data.addressDetail}, ${data.ward}, ${data.province}`;
+
+    // Ép kiểu số an toàn
+    const orderTotal = parseInt(cart.orderTotal) || 0;
+
     const orderId = await orderModel.createOrder(
       userId,
-      cart.orderTotal,
+      orderTotal,
       fullAddress,
-      data.payment
+      data.payment,
     );
 
+    // Sửa lỗi số lượng & đơn giá bị loạn
     for (const item of cart.items) {
-      const sub = Number(item.PriceProduct) * Number(item.QuantityCartItem);
+      const quantity = parseInt(item.QuantityCartItem) || 1;
+      const unitPrice = parseInt(item.PriceProduct) || 0;
+
       await orderModel.createOrderDetail(
         orderId,
         item.IDProduct,
-        item.QuantityCartItem,
-        item.PriceProduct,
-        sub
+        item.NameProduct || "", // ← thêm tên sản phẩm
+        quantity, // số lượng
+        unitPrice, // đơn giá
       );
     }
 
@@ -370,7 +377,12 @@ async function handlePlaceOrder(req, res) {
 }
 
 router.post("/checkout", requireLogin, uploadAvatar.none(), handlePlaceOrder);
-router.post("/place-order", requireLogin, uploadAvatar.none(), handlePlaceOrder);
+router.post(
+  "/place-order",
+  requireLogin,
+  uploadAvatar.none(),
+  handlePlaceOrder,
+);
 
 router.get("/place-order", requireLogin, (req, res) => {
   res.redirect("/checkout");
@@ -503,7 +515,7 @@ async function handleUpdateProfile(req, res) {
       note,
       birthday,
       gender,
-      avatar
+      avatar,
     );
 
     if (fullName) req.session.user_name = fullName;
@@ -520,19 +532,19 @@ router.post(
   "/update-profile",
   requireLogin,
   uploadAvatar.single("avatar"),
-  handleUpdateProfile
+  handleUpdateProfile,
 );
 router.post(
   "/update_profile",
   requireLogin,
   uploadAvatar.single("avatar"),
-  handleUpdateProfile
+  handleUpdateProfile,
 );
 router.get("/update-profile", requireLogin, (req, res) =>
-  res.redirect("/my-account")
+  res.redirect("/my-account"),
 );
 router.get("/update_profile", requireLogin, (req, res) =>
-  res.redirect("/my-account")
+  res.redirect("/my-account"),
 );
 
 module.exports = router;
