@@ -404,7 +404,30 @@ router.get("/my-orders", requireLogin, async (req, res) => {
     res.status(500).send("Lỗi server");
   }
 });
+// Hủy đơn hàng (chỉ khi đang "Chờ xác nhận")
+router.get("/cancel-order", requireLogin, async (req, res) => {
+  try {
+    const orderId = req.query.id;
+    if (!orderId) return res.redirect("/my-orders");
 
+    const order = await orderModel.getOrderById(orderId);
+
+    // Chỉ cho hủy đơn của chính mình và đang chờ xác nhận
+    if (!order || Number(order.IDUser) !== Number(req.session.user_id)) {
+      return res.redirect("/my-orders");
+    }
+
+    if (order.StatusOrder !== "Chờ xác nhận") {
+      return res.redirect("/order-detail?id=" + orderId);
+    }
+
+    await orderModel.updateStatus(orderId, "Đã hủy");
+    res.redirect("/my-orders");
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("Lỗi server");
+  }
+});
 router.get("/order-detail", requireLogin, async (req, res) => {
   try {
     const order = await orderModel.getOrderById(req.query.id);
