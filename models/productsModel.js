@@ -1,34 +1,42 @@
-const pool = require('./db');
+const pool = require("./db");
 
 class ProductsModel {
+  // Lấy tất cả sản phẩm đang hoạt động (IsActiveProduct = 1) cho phía User
   async getAllProducts() {
-    const [rows] = await pool.query('SELECT * FROM products ORDER BY IDProduct DESC');
+    const [rows] = await pool.query(
+      "SELECT * FROM products WHERE IsActiveProduct = 1 OR IsActiveProduct IS NULL ORDER BY IDProduct DESC",
+    );
     return rows;
   }
 
+  // Lọc sản phẩm theo danh mục và phân trang (chỉ lấy sản phẩm active)
   async getProductsByFilter(start, limit, catId = 0) {
-    let sql = 'SELECT * FROM products';
+    let sql = "SELECT * FROM products WHERE (IsActiveProduct = 1 OR IsActiveProduct IS NULL)";
     const params = [];
     if (catId > 0) {
-      sql += ' WHERE IDCategory = ?';
+      sql += " AND IDCategory = ?";
       params.push(catId);
     }
-    sql += ' ORDER BY IDProduct DESC LIMIT ?, ?';
+    sql += " ORDER BY IDProduct DESC LIMIT ?, ?";
     params.push(start, limit);
     const [rows] = await pool.query(sql, params);
     return rows;
   }
 
+  // Lấy 10 sản phẩm mới nhất (chỉ lấy sản phẩm active)
   async get10LatestProducts() {
-    const [rows] = await pool.query('SELECT * FROM products ORDER BY IDProduct DESC LIMIT 10');
+    const [rows] = await pool.query(
+      "SELECT * FROM products WHERE IsActiveProduct = 1 OR IsActiveProduct IS NULL ORDER BY IDProduct DESC LIMIT 10",
+    );
     return rows;
   }
 
+  // Tìm kiếm sản phẩm (chỉ tìm trong sản phẩm active)
   async searchProducts(keyword, categoryId = 0) {
-    let sql = 'SELECT * FROM products WHERE NameProduct LIKE ?';
+    let sql = "SELECT * FROM products WHERE (IsActiveProduct = 1 OR IsActiveProduct IS NULL) AND NameProduct LIKE ?";
     const params = [`%${keyword}%`];
     if (categoryId > 0) {
-      sql += ' AND IDCategory = ?';
+      sql += " AND IDCategory = ?";
       params.push(categoryId);
     }
     const [rows] = await pool.query(sql, params);
@@ -41,16 +49,16 @@ class ProductsModel {
        FROM products p
        LEFT JOIN categories c ON p.IDCategory = c.IDCategory
        WHERE p.IDProduct = ? LIMIT 1`,
-      [id]
+      [id],
     );
     return rows[0] || null;
   }
 
   async insertProduct(name, price, stock, desc, image, category) {
     const [r] = await pool.query(
-      `INSERT INTO products (NameProduct, PriceProduct, StockQuantityProduct, DescriptionProduct, ImageUrlProduct, IDCategory)
-       VALUES (?, ?, ?, ?, ?, ?)`,
-      [name, price, stock, desc, image, category]
+      `INSERT INTO products (NameProduct, PriceProduct, StockQuantityProduct, DescriptionProduct, ImageUrlProduct, IDCategory, IsActiveProduct)
+       VALUES (?, ?, ?, ?, ?, ?, 1)`,
+      [name, price, stock, desc, image, category],
     );
     return r.insertId;
   }
@@ -59,27 +67,31 @@ class ProductsModel {
     if (image) {
       await pool.query(
         `UPDATE products SET NameProduct=?, PriceProduct=?, StockQuantityProduct=?, DescriptionProduct=?, ImageUrlProduct=?, IDCategory=? WHERE IDProduct=?`,
-        [name, price, stock, desc, image, category, id]
+        [name, price, stock, desc, image, category, id],
       );
     } else {
       await pool.query(
         `UPDATE products SET NameProduct=?, PriceProduct=?, StockQuantityProduct=?, DescriptionProduct=?, IDCategory=? WHERE IDProduct=?`,
-        [name, price, stock, desc, category, id]
+        [name, price, stock, desc, category, id],
       );
     }
     return true;
   }
 
+  // Thay vì DELETE vĩnh viễn (gây lỗi khóa ngoại đơn hàng), ta chuyển IsActiveProduct thành 0 (ẩn)
   async deleteProduct(id) {
-    await pool.query('DELETE FROM products WHERE IDProduct = ?', [id]);
-    return true;
+    const [result] = await pool.query(
+      `UPDATE products SET IsActiveProduct = 0 WHERE IDProduct = ?`,
+      [id],
+    );
+    return result;
   }
 
   async countTotalProducts(catId = 0) {
-    let sql = 'SELECT COUNT(*) as total FROM products';
+    let sql = "SELECT COUNT(*) as total FROM products WHERE (IsActiveProduct = 1 OR IsActiveProduct IS NULL)";
     const params = [];
     if (catId > 0) {
-      sql += ' WHERE IDCategory = ?';
+      sql += " AND IDCategory = ?";
       params.push(catId);
     }
     const [rows] = await pool.query(sql, params);
@@ -88,32 +100,41 @@ class ProductsModel {
 
   async getReviewsByProductId(id) {
     const [rows] = await pool.query(
-      'SELECT * FROM reviews WHERE IDProduct = ? ORDER BY IDReview DESC',
-      [id]
+      "SELECT * FROM reviews WHERE IDProduct = ? ORDER BY IDReview DESC",
+      [id],
     );
     return rows;
   }
 
-  async insertReview(idProduct, name, email, rating, content) {
+  async insertReview(idProduct, idUser, name, rating, content) {
     const [r] = await pool.query(
-      `INSERT INTO reviews (IDProduct, NameComment, EmailComment, Rating, Content)
-       VALUES (?, ?, ?, ?, ?)`,
-      [idProduct, name, email, rating, content]
+      `INSERT INTO reviews (IDProduct, IDUser, NameComment, Rating, Content)
+     VALUES (?, ?, ?, ?, ?)`,
+      [idProduct, idUser, name, rating, content],
     );
     return r.insertId;
   }
 
   async decreaseStock(productId, quantity) {
     try {
-      await pool.query('UPDATE products SET StockQuantityProduct = StockQuantityProduct - ? WHERE IDProduct = ?', [quantity, productId]);
+      await pool.query(
+        "UPDATE products SET StockQuantityProduct = StockQuantityProduct - ? WHERE IDProduct = ?",
+        [quantity, productId],
+      );
     } catch (e) {
-      await pool.query('UPDATE products SET QuantityProduct = QuantityProduct - ? WHERE IDProduct = ?', [quantity, productId]);
+      await pool.query(
+        "UPDATE products SET QuantityProduct = QuantityProduct - ? WHERE IDProduct = ?",
+        [quantity, productId],
+      );
     }
     return true;
   }
 
   async increaseSold(productId, quantity) {
-    await pool.query('UPDATE products SET Sold = Sold + ? WHERE IDProduct = ?', [quantity, productId]);
+    await pool.query(
+      "UPDATE products SET Sold = Sold + ? WHERE IDProduct = ?",
+      [quantity, productId],
+    );
     return true;
   }
 
@@ -122,18 +143,21 @@ class ProductsModel {
       `SELECT r.*, p.NameProduct, p.ImageUrlProduct
        FROM reviews r
        INNER JOIN products p ON r.IDProduct = p.IDProduct
-       ORDER BY r.IDReview DESC`
+       ORDER BY r.IDReview DESC`,
     );
     return rows;
   }
 
   async deleteReview(id) {
-    await pool.query('DELETE FROM reviews WHERE IDReview = ?', [id]);
+    await pool.query("DELETE FROM reviews WHERE IDReview = ?", [id]);
     return true;
   }
 
   async getProductsByCategory(idCat) {
-    const [rows] = await pool.query('SELECT * FROM products WHERE IDCategory = ?', [idCat]);
+    const [rows] = await pool.query(
+      "SELECT * FROM products WHERE IDCategory = ? AND (IsActiveProduct = 1 OR IsActiveProduct IS NULL)",
+      [idCat],
+    );
     return rows;
   }
 
@@ -141,10 +165,10 @@ class ProductsModel {
     const [rows] = await pool.query(
       `SELECT IDProduct, NameProduct, PriceProduct, Discount, ImageUrlProduct, Sold
        FROM products
-       WHERE IsActiveProduct = 1 OR IsActiveProduct IS NULL
+       WHERE (IsActiveProduct = 1 OR IsActiveProduct IS NULL)
        ORDER BY Sold DESC
        LIMIT ?`,
-      [limit]
+      [limit],
     );
     return rows;
   }
@@ -159,11 +183,11 @@ class ProductsModel {
               COUNT(r.IDReview) AS review_count
        FROM products p
        LEFT JOIN reviews r ON p.IDProduct = r.IDProduct
-       WHERE p.IsActiveProduct = 1 OR p.IsActiveProduct IS NULL
+       WHERE (p.IsActiveProduct = 1 OR p.IsActiveProduct IS NULL)
        GROUP BY p.IDProduct
        ORDER BY review_count DESC
        LIMIT ?`,
-      [limit]
+      [limit],
     );
     return rows;
   }
@@ -173,7 +197,10 @@ class ProductsModel {
   }
 
   async updateDiscount(id, discount) {
-    await pool.query('UPDATE products SET Discount = ? WHERE IDProduct = ?', [discount, id]);
+    await pool.query("UPDATE products SET Discount = ? WHERE IDProduct = ?", [
+      discount,
+      id,
+    ]);
     return true;
   }
 
@@ -189,17 +216,21 @@ class ProductsModel {
   }
 
   async getOrderById(id) {
-    const [rows] = await pool.query(`
+    const [rows] = await pool.query(
+      `
       SELECT o.*, u.FullNameUser, u.PhoneNumberUser
       FROM orders o
       LEFT JOIN users u ON o.IDUser = u.IDUser
       WHERE o.IDOrder = ?
-    `, [id]);
+    `,
+      [id],
+    );
     return rows[0] || null;
   }
 
   async getOrderDetails(orderId) {
-  const [rows] = await pool.query(`
+    const [rows] = await pool.query(
+      `
     SELECT 
       od.*,
       p.NameProduct,
@@ -210,12 +241,17 @@ class ProductsModel {
     FROM order_details od
     LEFT JOIN products p ON od.IDProduct = p.IDProduct
     WHERE od.IDOrder = ?
-  `, [orderId]);
-  return rows;
-}
+  `,
+      [orderId],
+    );
+    return rows;
+  }
 
   async updateOrderStatus(id, status) {
-    await pool.query(`UPDATE orders SET StatusOrder = ? WHERE IDOrder = ?`, [status, id]);
+    await pool.query(`UPDATE orders SET StatusOrder = ? WHERE IDOrder = ?`, [
+      status,
+      id,
+    ]);
     return true;
   }
 

@@ -125,8 +125,12 @@ router.get("/detail", async (req, res) => {
 
 router.post("/submit-review", requireLogin, async (req, res) => {
   try {
-    const { id_product, name, email, rating, review } = req.body;
-    await productsModel.insertReview(id_product, name, email, rating, review);
+    const { id_product, name, rating, review } = req.body;
+    const id_user = req.session.user_id; // Lấy IDUser từ session
+
+    // Truyền đúng các tham số: id_product, id_user, name, rating, review
+    await productsModel.insertReview(id_product, id_user, name, rating, review);
+
     res.redirect("/detail?id=" + id_product);
   } catch (e) {
     console.error(e);
