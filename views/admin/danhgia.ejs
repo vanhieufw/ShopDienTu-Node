@@ -1,28 +1,53 @@
-<%- include('layout/header') %>
-<h2 class="mb-4">Đánh giá sản phẩm</h2>
-<table class="table table-bordered bg-white">
-  <thead class="table-dark">
-    <tr>
-      <th>ID</th><th>Sản phẩm</th><th>Người đánh giá</th><th>Email</th>
-      <th>Sao</th><th>Nội dung</th><th>Ngày</th><th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% (reviews || []).forEach(function(r) { %>
-    <tr>
-      <td><%= r.IDReview %></td>
-      <td><%= r.NameProduct || r.IDProduct %></td>
-      <td><%= r.NameComment %></td>
-      <td><%= r.EmailComment %></td>
-      <td><%= r.Rating %></td>
-      <td><%= r.Content %></td>
-      <td><%= r.DateComment ? new Date(r.DateComment).toLocaleString('vi-VN') : '' %></td>
-      <td>
-        <a href="/admin/reviews/delete?id=<%= r.IDReview %>" class="btn btn-sm btn-danger"
-           onclick="return confirm('Xóa đánh giá?')">Xóa</a>
-      </td>
-    </tr>
-    <% }) %>
-  </tbody>
-</table>
+<%- include('./layout/header', { active: 'reviews' }) %>
+
+<h3 class="mb-4"><i class="fas fa-comments text-primary"></i> Quản lý Đánh giá & Bình luận</h3>
+
+<div class="card border-0 shadow-sm">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th width="60">ID</th>
+            <th width="220">Sản phẩm</th>
+            <th width="160">Người gửi</th>
+            <th width="110">Đánh giá</th>
+            <th>Nội dung bình luận</th>
+            <th width="90" class="text-end">Xóa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (reviews && reviews.length) { %>
+            <% reviews.forEach(function(r) { %>
+              <tr>
+                <td>#<%= r.IDReview %></td>
+                <td><small class="fw-bold text-muted"><%= r.NameProduct || r.IDProduct %></small></td>
+                <td>
+                  <span class="fw-bold d-block"><%= r.NameComment || r.FullNameUser %></span>
+                  <small class="text-muted" style="font-size:11px"><%= r.EmailComment || '' %></small>
+                </td>
+                <td>
+                  <div style="color:#ffc107;font-size:0.9rem">
+                    <% for (let i = 1; i <= 5; i++) { %>
+                      <i class="<%= i <= (r.Rating || 0) ? 'fas' : 'far' %> fa-star"></i>
+                    <% } %>
+                  </div>
+                </td>
+                <td><p class="mb-0 text-secondary" style="font-size:0.95rem">"<%= r.Content %>"</p></td>
+                <td class="text-end">
+                  <a href="/admin/reviews/delete?id=<%= r.IDReview %>" class="btn btn-sm btn-outline-danger"
+                     onclick="return confirm('Bạn có chắc muốn xóa bình luận này không?')">
+                    <i class="fas fa-trash-alt"></i>
+                  </a>
+                </td>
+              </tr>
+            <% }) %>
+          <% } else { %>
+            <tr><td colspan="6" class="text-center py-5 text-muted">Chưa có đánh giá nào</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 </div></body></html>

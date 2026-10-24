@@ -1,56 +1,71 @@
-<%- include('layout/header') %>
+<%- include('./layout/header', { active: 'products' }) %>
 <% const isEdit = product && product.IDProduct; %>
-<h2 class="mb-4"><%= isEdit ? 'Sửa sản phẩm' : 'Thêm sản phẩm' %></h2>
-<form action="/admin/products/store" method="POST" enctype="multipart/form-data" class="bg-white p-4 rounded shadow-sm">
-  <% if (isEdit) { %><input type="hidden" name="id" value="<%= product.IDProduct %>"><% } %>
-  <div class="mb-3">
-    <label class="form-label">Tên sản phẩm</label>
-    <input type="text" name="NameProduct" class="form-control" required
-           value="<%= isEdit ? product.NameProduct : '' %>">
-  </div>
-  <div class="row">
-    <div class="col-md-4 mb-3">
-      <label class="form-label">Giá</label>
-      <input type="number" name="PriceProduct" class="form-control" required
-             value="<%= isEdit ? product.PriceProduct : '' %>">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3 class="mb-0"><%= isEdit ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm mới' %></h3>
+  <a href="/admin/products" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Quay lại</a>
+</div>
+
+<form action="/admin/products/store" method="POST" enctype="multipart/form-data" class="card border-0 shadow-sm">
+  <div class="card-body">
+    <% if (isEdit) { %><input type="hidden" name="id" value="<%= product.IDProduct %>"><% } %>
+
+    <div class="row">
+      <div class="col-md-8 mb-3">
+        <label class="form-label fw-bold">Tên sản phẩm</label>
+        <input type="text" name="NameProduct" class="form-control" required
+               value="<%= isEdit ? product.NameProduct : '' %>" placeholder="Ví dụ: iPhone 15 Pro Max">
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-label fw-bold">Danh mục</label>
+        <select name="IDCategory" class="form-select" required>
+          <option value="">-- Chọn danh mục --</option>
+          <% (categories || []).forEach(function(c) { %>
+            <option value="<%= c.IDCategory %>" <%= isEdit && product.IDCategory == c.IDCategory ? 'selected' : '' %>>
+              <%= c.NameCategory %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
     </div>
-    <div class="col-md-4 mb-3">
-      <label class="form-label">Tồn kho</label>
-      <input type="number" name="StockQuantityProduct" class="form-control" required
-             value="<%= isEdit ? product.StockQuantityProduct : 0 %>">
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label fw-bold">Giá bán (VNĐ)</label>
+        <input type="number" name="PriceProduct" class="form-control" required
+               value="<%= isEdit ? product.PriceProduct : '' %>">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label fw-bold">Số lượng tồn kho</label>
+        <input type="number" name="StockQuantityProduct" class="form-control" required
+               value="<%= isEdit ? product.StockQuantityProduct : 0 %>">
+      </div>
     </div>
-    <div class="col-md-4 mb-3">
-      <label class="form-label">Danh mục</label>
-      <select name="IDCategory" class="form-select" required>
-        <% (categories || []).forEach(function(c) { %>
-          <option value="<%= c.IDCategory %>"
-            <%= isEdit && product.IDCategory == c.IDCategory ? 'selected' : '' %>>
-            <%= c.NameCategory %>
-          </option>
-        <% }) %>
-      </select>
+
+    <div class="mb-3">
+      <label class="form-label fw-bold">Mô tả chi tiết</label>
+      <textarea name="DescriptionProduct" class="form-control" rows="5"><%= isEdit ? (product.DescriptionProduct || '') : '' %></textarea>
     </div>
-  </div>
-  <div class="mb-3">
-    <label class="form-label">Mô tả</label>
-    <textarea name="DescriptionProduct" class="form-control" rows="4"><%= isEdit ? (product.DescriptionProduct || '') : '' %></textarea>
-  </div>
-  <div class="mb-3">
-    <label class="form-label">Ảnh sản phẩm</label>
-    <input type="file" name="ImageUrlProduct" class="form-control" accept="image/*" onchange="previewImage(this)">
-    <div class="mt-2">
-      <% if (isEdit && product.ImageUrlProduct) { %>
-        <img id="preview" src="/img/<%= product.ImageUrlProduct %>" class="img-thumbnail" style="max-height:180px">
-      <% } else { %>
-        <img id="preview" src="https://via.placeholder.com/150?text=No+Image" class="img-thumbnail" style="max-height:180px">
-      <% } %>
+
+    <div class="mb-3">
+      <label class="form-label fw-bold">Ảnh sản phẩm</label>
+      <input type="file" name="ImageUrlProduct" class="form-control" accept="image/*" onchange="previewImage(this)">
+      <div class="mt-2">
+        <% if (isEdit && product.ImageUrlProduct) { %>
+          <img id="preview" src="/img/<%= product.ImageUrlProduct %>" class="img-thumbnail" style="max-height:180px">
+        <% } else { %>
+          <img id="preview" src="https://via.placeholder.com/150?text=No+Image" class="img-thumbnail" style="max-height:180px">
+        <% } %>
+      </div>
     </div>
-  </div>
-  <div class="text-end">
-    <a href="/admin/products" class="btn btn-secondary">Hủy</a>
-    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu</button>
+
+    <div class="text-end">
+      <a href="/admin/products" class="btn btn-secondary me-2">Hủy bỏ</a>
+      <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu sản phẩm</button>
+    </div>
   </div>
 </form>
+
 <script>
 function previewImage(input) {
   if (input.files && input.files[0]) {

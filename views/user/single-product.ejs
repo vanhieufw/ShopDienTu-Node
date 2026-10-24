@@ -218,34 +218,44 @@
                                                 </div>
 
                                                 <div class="submit-review">
-                                                    <h3>Viết đánh giá của bạn</h3>
-                                                    <% if (session && session.user_name) { %>
-                                                        <form action="/submit-review" method="POST">
-                                                            <input type="hidden" name="id_product" value="<%= product.IDProduct %>">
-                                                            <p>
-                                                                <label for="name">Tên hiển thị</label>
-                                                                <input name="name" type="text" value="<%= session.user_name %>" required class="form-control">
-                                                            </p>
-                                                            <p><label for="email">Email</label> <input name="email" type="email" required class="form-control"></p>
-                                                            <div class="rating-chooser" style="margin-bottom: 15px;">
-                                                                <label>Đánh giá sao:</label>
-                                                                <select name="rating" class="form-control" style="width: 200px;">
-                                                                    <option value="5">5 Sao - Tuyệt vời</option>
-                                                                    <option value="4">4 Sao - Tốt</option>
-                                                                    <option value="3">3 Sao - Bình thường</option>
-                                                                    <option value="2">2 Sao - Kém</option>
-                                                                    <option value="1">1 Sao - Tệ</option>
-                                                                </select>
-                                                            </div>
-                                                            <p><label for="review">Nội dung đánh giá</label> <textarea name="review" cols="30" rows="5" required class="form-control"></textarea></p>
-                                                            <p><input type="submit" value="Gửi đánh giá" class="btn btn-primary"></p>
-                                                        </form>
-                                                    <% } else { %>
-                                                        <div class="alert alert-warning">
-                                                            Bạn cần <a href="/login"><strong>Đăng nhập</strong></a> để gửi đánh giá cho sản phẩm này.
-                                                        </div>
-                                                    <% } %>
-                                                </div>
+    <h3>Viết đánh giá của bạn</h3>
+    <% if (session && session.user_id) { %>
+        <form action="/submit-review" method="POST">
+            <!-- Lưu ID sản phẩm và ID người dùng dưới dạng input hidden -->
+            <input type="hidden" name="id_product" value="<%= product.IDProduct %>">
+            <input type="hidden" name="id_user" value="<%= session.user_id %>">
+
+            <p>
+                <label for="name">Tên hiển thị</label>
+                <input name="name" type="text" value="<%= session.user_name %>" required class="form-control">
+            </p>
+
+            <div class="rating-chooser" style="margin-bottom: 15px;">
+                <label>Đánh giá sao:</label>
+                <select name="rating" class="form-control" style="width: 200px;">
+                    <option value="5">5 Sao - Tuyệt vời</option>
+                    <option value="4">4 Sao - Tốt</option>
+                    <option value="3">3 Sao - Bình thường</option>
+                    <option value="2">2 Sao - Kém</option>
+                    <option value="1">1 Sao - Tệ</option>
+                </select>
+            </div>
+
+            <p>
+                <label for="review">Nội dung đánh giá</label> 
+                <textarea name="review" cols="30" rows="5" required class="form-control"></textarea>
+            </p>
+
+            <p>
+                <input type="submit" value="Gửi đánh giá" class="btn btn-primary">
+            </p>
+        </form>
+    <% } else { %>
+        <div class="alert alert-warning">
+            Bạn cần <a href="/login"><strong>Đăng nhập</strong></a> để gửi đánh giá cho sản phẩm này.
+        </div>
+    <% } %>
+</div>
                                             </div>
                                         </div>
                                     </div>

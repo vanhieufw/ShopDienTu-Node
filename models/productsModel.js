@@ -104,7 +104,6 @@ class ProductsModel {
   }
 
   async decreaseStock(productId, quantity) {
-    // PHP used QuantityProduct; table may use StockQuantityProduct
     try {
       await pool.query('UPDATE products SET StockQuantityProduct = StockQuantityProduct - ? WHERE IDProduct = ?', [quantity, productId]);
     } catch (e) {
@@ -150,7 +149,6 @@ class ProductsModel {
     return rows;
   }
 
-  // alias used in some routes
   async getTopSellingProducts(limit = 3) {
     return this.getTopSelling(limit);
   }
@@ -171,13 +169,71 @@ class ProductsModel {
   }
 
   async getFeatured(limit = 3) {
-    // dùng sản phẩm review nhiều nhất làm nổi bật
     return this.getMostReviewedProducts(limit);
   }
 
   async updateDiscount(id, discount) {
     await pool.query('UPDATE products SET Discount = ? WHERE IDProduct = ?', [discount, id]);
     return true;
+  }
+
+  // ==================== ĐƠN HÀNG ====================
+  async getAllOrders() {
+    const [rows] = await pool.query(`
+      SELECT o.*, u.FullNameUser, u.PhoneNumberUser
+      FROM orders o
+      LEFT JOIN users u ON o.IDUser = u.IDUser
+      ORDER BY o.OrderDateOrder DESC
+    `);
+    return rows;
+  }
+
+  async getOrderById(id) {
+    const [rows] = await pool.query(`
+      SELECT o.*, u.FullNameUser, u.PhoneNumberUser
+      FROM orders o
+      LEFT JOIN users u ON o.IDUser = u.IDUser
+      WHERE o.IDOrder = ?
+    `, [id]);
+    return rows[0] || null;
+  }
+
+  async getOrderDetails(orderId) {
+    const [rows] = await pool.query(`
+      SELECT od.*, p.NameProduct, p.ImageUrlProduct
+      FROM order_details od
+      LEFT JOIN products p ON od.IDProduct = p.IDProduct
+      WHERE od.IDOrder = ?
+    `, [orderId]);
+    return rows;
+  }
+
+  async updateOrderStatus(id, status) {
+    await pool.query(`UPDATE orders SET StatusOrder = ? WHERE IDOrder = ?`, [status, id]);
+    return true;
+  }
+
+  // ==================== THỐNG KÊ ====================
+  async getTotalRevenue() {
+    const [rows] = await pool.query(`
+      SELECT SUM(TotalAmountOrder) as total 
+      FROM orders 
+      WHERE StatusOrder IN ('Hoàn thành', 'Giao hàng thành công')
+    `);
+    return rows[0].total || 0;
+  }
+
+  async getTotalOrders() {
+    const [rows] = await pool.query(`SELECT COUNT(*) as total FROM orders`);
+    return rows[0].total || 0;
+  }
+
+  async getTotalCustomers() {
+    const [rows] = await pool.query(`
+      SELECT COUNT(*) as total FROM users 
+      WHERE RoleUser = 0 OR RoleUser IS NULL
+    `);
+    return rows[0].total || 0;
   }
 }
 

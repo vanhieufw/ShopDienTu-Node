@@ -130,61 +130,63 @@
                 </thead>
                 <tbody>
                     <% if ((orders || []).length) { %>
-                        <% (orders || []).forEach(function(o) { %>// Xử lý class màu sắc dựa trên text trong database của bạn
-                            $statusClass = '';
-                            $statusText = trim($o['StatusOrder']);
+    <% (orders || []).forEach(function(o) { 
+        // Xử lý class màu sắc dựa trên text trong database
+        let statusClass = 'status-pending';
+        let statusText = (o.StatusOrder || '').trim();
 
-                            switch ($statusText) {
-                                case 'Chờ xác nhận':
-                                    $statusClass = 'status-pending';
-                                    break;
-                                case 'Đang chuẩn bị hàng': // Dựa trên hình ảnh DB dòng 1-9
-                                    $statusClass = 'status-processing';
-                                    break;
-                                case 'Đang giao hàng':
-                                    $statusClass = 'status-shipping';
-                                    break;
-                                case 'Giao hàng thành công':
-                                case 'Hoàn thành':
-                                    $statusClass = 'status-completed';
-                                    break;
-                                case 'Đã hủy':
-                                    $statusClass = 'status-cancelled';
-                                    break;
-                                default:
-                                    $statusClass = 'status-pending'; // Mặc định
-                            }
-                        %>
-                            <tr>
-                                <td><strong>#<%= o.OrderCode %></strong></td>
+        switch (statusText) {
+            case 'Chờ xác nhận':
+                statusClass = 'status-pending';
+                break;
+            case 'Đang chuẩn bị hàng':
+                statusClass = 'status-processing';
+                break;
+            case 'Đang giao hàng':
+            case 'Đang vận chuyển':
+                statusClass = 'status-shipping';
+                break;
+            case 'Giao hàng thành công':
+            case 'Hoàn thành':
+                statusClass = 'status-completed';
+                break;
+            case 'Đã hủy':
+                statusClass = 'status-cancelled';
+                break;
+            default:
+                statusClass = 'status-pending';
+        }
+    %>
+        <tr>
+            <td><strong>#<%= o.OrderCode %></strong></td>
 
-                                <!-- Format ngày tháng -->
-                                <td><%= o.OrderDateOrder ? new Date(o.OrderDateOrder).toLocaleString("vi-VN") : "" %></td>
+            <!-- Format ngày tháng -->
+            <td><%= o.OrderDateOrder ? new Date(o.OrderDateOrder).toLocaleString("vi-VN") : "" %></td>
 
-                                <!-- Format tiền tệ -->
-                                <td class="price"><%= Number(o.TotalAmountOrder).toLocaleString("vi-VN") %>đ</td>
+            <!-- Format tiền tệ -->
+            <td class="price"><%= Number(o.TotalAmountOrder).toLocaleString("vi-VN") %>đ</td>
 
-                                <td style="text-transform: capitalize;"><%= o.PaymentMethodOrder %></td>
+            <td style="text-transform: capitalize;"><%= o.PaymentMethodOrder %></td>
 
-                                <!-- Badge trạng thái -->
-                                <td>
-                                    <span class="badge <%= statusClass %>">
-                                        <%= o.StatusOrder %>
-                                    </span>
-                                </td>
+            <!-- Badge trạng thái -->
+            <td>
+                <span class="badge <%= statusClass %>">
+                    <%= o.StatusOrder %>
+                </span>
+            </td>
 
-                                <td>
-                                    <a href="/order-detail?id=<%= o.IDOrder %>" class="btn-view">
-                                        Xem chi tiết
-                                    </a>
-                                </td>
-                            </tr>
-                        <% }) %>
-                    <% } else { %>
-                        <tr>
-                            <td colspan="6" class="empty-order">Bạn chưa có đơn hàng nào.</td>
-                        </tr>
-                    <% } %>
+            <td>
+                <a href="/order-detail?id=<%= o.IDOrder %>" class="btn-view">
+                    Xem chi tiết
+                </a>
+            </td>
+        </tr>
+    <% }) %>
+<% } else { %>
+    <tr>
+        <td colspan="6" class="empty-order">Bạn chưa có đơn hàng nào.</td>
+    </tr>
+<% } %>
                 </tbody>
             </table>
         </div>

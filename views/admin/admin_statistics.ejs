@@ -1,0 +1,88 @@
+<%- include('./layout/header', { active: 'statistics' }) %>
+
+<h3 class="mb-4">Bảng Thống Kê Tổng Quan</h3>
+
+<div class="row g-4 mb-4">
+  <div class="col-md-4">
+    <div class="card border-0 text-white" style="background: linear-gradient(45deg,#11998e,#38ef7d)">
+      <div class="card-body">
+        <h5><i class="fas fa-money-bill-wave"></i> Doanh Thu</h5>
+        <h2 class="fw-bold"><%= Number(totalRevenue || 0).toLocaleString('vi-VN') %> VNĐ</h2>
+        <p class="mb-0 small">Tổng doanh thu đơn thành công</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card border-0 text-white" style="background: linear-gradient(45deg,#FF512F,#DD2476)">
+      <div class="card-body">
+        <h5><i class="fas fa-shopping-cart"></i> Tổng Đơn Hàng</h5>
+        <h2 class="fw-bold"><%= totalOrders || 0 %></h2>
+        <p class="mb-0 small">Bao gồm mọi trạng thái</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card border-0 text-white" style="background: linear-gradient(45deg,#4568DC,#B06AB3)">
+      <div class="card-body">
+        <h5><i class="fas fa-users"></i> Khách Hàng</h5>
+        <h2 class="fw-bold"><%= totalCustomers || 0 %></h2>
+        <p class="mb-0 small">Số lượng tài khoản đăng ký</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-8">
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-white">
+        <h6 class="mb-0 text-primary">Biểu đồ doanh thu theo tháng</h6>
+      </div>
+      <div class="card-body">
+        <canvas id="revenueChart" height="120"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-white">
+        <h6 class="mb-0 text-primary">Tỉ lệ đơn hàng</h6>
+      </div>
+      <div class="card-body">
+        <canvas id="statusChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Biểu đồ doanh thu
+  new Chart(document.getElementById('revenueChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: <%- JSON.stringify(chartMonths || []) %>,
+      datasets: [{
+        label: 'Doanh thu (VNĐ)',
+        data: <%- JSON.stringify(chartRevenue || []) %>,
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: { scales: { y: { beginAtZero: true } } }
+  });
+
+  // Biểu đồ trạng thái
+  new Chart(document.getElementById('statusChart').getContext('2d'), {
+    type: 'doughnut',
+    data: {
+      labels: <%- JSON.stringify(statusLabels || []) %>,
+      datasets: [{
+        data: <%- JSON.stringify(statusData || []) %>,
+        backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b']
+      }]
+    }
+  });
+</script>
+</div></body></html>

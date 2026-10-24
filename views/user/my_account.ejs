@@ -125,8 +125,8 @@
                 <div class="col-md-3">
                     <div class="profile-container" style="padding: 15px;">
                         <div style="text-align: center; margin-bottom: 20px;">
-                            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width: 80px; border-radius: 50%;">
-                            <h4 style="margin-top: 10px;"></h4>
+                            <img src="<%= user.AvatarUser ? ('/img/avatars/' + user.AvatarUser) : 'https://www.w3schools.com/howto/img_avatar.png' %>" alt="Avatar" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;">
+                            <h4 style="margin-top: 10px;"><%= user.FullNameUser || '' %></h4>
                         </div>
                         <ul class="sidebar-menu list-unstyled">
                             <li class="active"><a href="/my-account"><i class="fa fa-user"></i> Thông tin tài khoản</a></li>
@@ -141,9 +141,9 @@
                     <div class="profile-container">
                         <h2 class="profile-title">Hồ Sơ Của Tôi</h2>
 
-                        
+                        <% if (typeof success !== 'undefined' && success) { %>
                             <div class="alert alert-success">Cập nhật thông tin thành công!</div>
-                        
+                        <% } %>
 
                         <!-- QUAN TRỌNG: Thêm enctype="multipart/form-data" để gửi file -->
                         <form action="/update-profile" method="POST" enctype="multipart/form-data">
@@ -151,8 +151,7 @@
                             <!-- Phần hiển thị và chọn Avatar -->
                             <div class="row" style="margin-bottom: 20px; display: flex; align-items: center;">
                                 <div class="col-md-3 text-center">
-                                    
-                                    <img src="" alt="Avatar" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #d70018;">
+                                    <img id="current-avatar" src="<%= user.AvatarUser ? ('/img/avatars/' + user.AvatarUser) : 'https://www.w3schools.com/howto/img_avatar.png' %>" alt="Avatar" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #d70018;">
                                 </div>
                                 <div class="col-md-9">
                                     <label>Thay đổi ảnh đại diện</label>
@@ -166,33 +165,32 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Họ và tên</label>
-                                        <input type="text" class="form-control" name="FullNameUser" value="" required>
+                                        <input type="text" class="form-control" name="FullNameUser" value="<%= user.FullNameUser || '' %>" required>
                                     </div>
                                 </div>
-                                <!-- ... Các ô input khác giữ nguyên ... -->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Số điện thoại</label>
-                                        <input type="text" class="form-control" name="PhoneNumberUser" value="" required>
+                                        <input type="text" class="form-control" name="PhoneNumberUser" value="<%= user.PhoneNumberUser || '' %>" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input type="email" class="form-control" name="EmailUser" value="">
+                                        <input type="email" class="form-control" name="EmailUser" value="<%= user.EmailUser || '' %>">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Ngày sinh</label>
-                                        <input type="date" class="form-control" name="BirthDay" value="">
+                                        <input type="date" class="form-control" name="BirthDay" value="<%= user.BirthDay ? user.BirthDay.toISOString().split('T')[0] : '' %>">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Tỉnh / Thành phố</label>
                                         <input type="text" class="form-control" name="Province"
-                                            value=""
+                                            value="<%= user.Province || '' %>"
                                             placeholder="Ví dụ: Hà Nội">
                                     </div>
                                 </div>
@@ -201,7 +199,7 @@
                                     <div class="form-group">
                                         <label>Quận / Huyện / Xã</label>
                                         <input type="text" class="form-control" name="Ward"
-                                            value=""
+                                            value="<%= user.Ward || '' %>"
                                             placeholder="Ví dụ: Phường Bách Khoa">
                                     </div>
                                 </div>
@@ -210,7 +208,7 @@
                                     <div class="form-group">
                                         <label>Địa chỉ chi tiết (Số nhà, đường)</label>
                                         <input type="text" class="form-control" name="AddressDetail"
-                                            value=""
+                                            value="<%= user.AddressDetail || '' %>"
                                             placeholder="Ví dụ: Số 1 Đại Cồ Việt">
                                     </div>
                                 </div>
@@ -219,20 +217,20 @@
                                     <div class="form-group">
                                         <label>Ghi chú (Mặc định cho đơn hàng)</label>
                                         <textarea class="form-control" name="Note" rows="2"
-                                            placeholder="Ví dụ: Giao giờ hành chính"></textarea>
+                                            placeholder="Ví dụ: Giao giờ hành chính"><%= user.Note || '' %></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Giới tính: </label> &nbsp;
                                         <label class="radio-inline">
-                                            <input type="radio" name="GenderUser" value="1" > Nam
+                                            <input type="radio" name="GenderUser" value="1" <%= Number(user.GenderUser) === 1 ? 'checked' : '' %>> Nam
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="GenderUser" value="2" > Nữ
+                                            <input type="radio" name="GenderUser" value="2" <%= Number(user.GenderUser) === 2 ? 'checked' : '' %>> Nữ
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="GenderUser" value="0" > Khác
+                                            <input type="radio" name="GenderUser" value="0" <%= Number(user.GenderUser) === 0 ? 'checked' : '' %>> Khác
                                         </label>
                                     </div>
                                 </div>
@@ -245,10 +243,9 @@
                     </div>
                 </div>
             </div>
-        </div> <!-- Đóng .row -->
-    </div> <!-- Đóng .container -->
+        </div>
     </div>
-    <!-- Script JS -->
+
     <div class="footer-top-area">
         <div class="container">
             <div class="row">
@@ -269,11 +266,11 @@
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">Thanh điều hướng </h2>
                         <ul>
-                            <li><a href="/my-account">Tài khoản</a></li> <!-- filter -->
-                            <li><a href="/my-orders">Lịch sử mua hàng</a></li> <!-- filter -->
-                            <li><a href="#">Yêu thích</a></li> <!-- filter -->
-                            <li><a href="/contact">Liên hệ</a></li> <!-- filter -->
-                            <li><a href="/">Trang chủ</a></li> <!-- filter -->
+                            <li><a href="/my-account">Tài khoản</a></li>
+                            <li><a href="/my-orders">Lịch sử mua hàng</a></li>
+                            <li><a href="#">Yêu thích</a></li>
+                            <li><a href="/contact">Liên hệ</a></li>
+                            <li><a href="/">Trang chủ</a></li>
                         </ul>
                     </div>
                 </div>
@@ -282,11 +279,11 @@
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">Danh mục</h2>
                         <ul>
-                            <li><a href="shoppage&cat_id=4">LAPTOP</a></li> <!-- filter -->
-                            <li><a href="shoppage&cat_id=3">Phụ Kiện </a></li> <!-- filter -->
-                            <li><a href="shoppage&cat_id=1">TV - Điện Máy</a></li> <!-- filter -->
-                            <li><a href="shoppage&cat_id=5">Đồng Hồ</a></li> <!-- filter -->
-                            <li><a href="shoppage&cat_id=2">PC GAMING</a></li> <!-- filter -->
+                            <li><a href="/shop?cat_id=4">LAPTOP</a></li>
+                            <li><a href="/shop?cat_id=3">Phụ Kiện </a></li>
+                            <li><a href="/shop?cat_id=1">TV - Điện Máy</a></li>
+                            <li><a href="/shop?cat_id=5">Đồng Hồ</a></li>
+                            <li><a href="/shop?cat_id=2">PC GAMING</a></li>
                         </ul>
                     </div>
                 </div>
@@ -305,7 +302,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End footer top area -->
+    </div>
 
     <div class="footer-bottom-area">
         <div class="container">
@@ -326,41 +323,27 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End footer bottom area -->
-    <!-- Latest jQuery form server -->
+    </div>
 
     <div class="floating-contact-wrap">
-
         <a href="https://zalo.me/0705955589" target="_blank" class="contact-btn btn-zalo">
             <span class="zalo-text">Z</span>
             <div class="contact-tooltip">Chat Zalo</div>
         </a>
-
         <a href="https://m.me/102803015947076" target="_blank" class="contact-btn btn-messenger">
             <svg viewBox="0 0 24 24">
                 <path d="M12 2C6.48 2 2 6.03 2 11C2 13.66 3.39 16.05 5.61 17.58L4.99 20.54C4.86 21.13 5.39 21.61 5.95 21.43L9.08 20.41C10.02 20.79 11 21 12 21C17.52 21 22 16.97 22 12C22 7.03 17.52 2 12 2ZM13.06 15.19L10.68 12.63L6.03 15.18C5.69 15.37 5.28 15 5.43 14.64L8.08 8.41C8.25 8.02 8.78 8.02 8.95 8.41L11.32 10.97L15.97 8.42C16.31 8.23 16.72 8.6 16.57 8.96L13.92 15.19C13.75 15.58 13.22 15.58 13.06 15.19Z" />
-                </path>
             </svg>
             <div class="contact-tooltip">Chat Facebook</div>
         </a>
-
     </div>
+
     <script src="https://code.jquery.com/jquery.min.js"></script>
-
-    <!-- Bootstrap JS form CDN -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-    <!-- jQuery sticky menu -->
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/jquery.sticky.js"></script>
-
-    <!-- jQuery easing -->
     <script src="/js/jquery.easing.1.3.min.js"></script>
-
-    <!-- Main Script -->
     <script src="/js/main.js"></script>
-
-    <!-- Slider -->
     <script type="text/javascript" src="/js/bxslider.min.js"></script>
     <script type="text/javascript" src="/js/script.slider.js"></script>
 </body>
@@ -417,5 +400,4 @@
         color: #d70018;
     }
 </style>
-
 </html>

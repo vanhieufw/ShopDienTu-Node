@@ -1,25 +1,48 @@
-<%- include('layout/header') %>
-<h2 class="mb-4">Đơn hàng</h2>
-<table class="table table-bordered bg-white">
-  <thead class="table-dark">
-    <tr>
-      <th>Mã</th><th>Khách hàng</th><th>SĐT</th><th>Tổng tiền</th>
-      <th>Địa chỉ</th><th>Thanh toán</th><th>Trạng thái</th><th>Ngày</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% (orders || []).forEach(function(o) { %>
-    <tr>
-      <td>#<%= o.IDOrder %></td>
-      <td><%= o.FullNameUser %></td>
-      <td><%= o.PhoneNumberUser %></td>
-      <td><%= Number(o.TotalAmountOrder).toLocaleString('vi-VN') %>đ</td>
-      <td><%= o.ShippingAddressOrder %></td>
-      <td><%= o.PaymentMethodOrder %></td>
-      <td><%= o.StatusOrder %></td>
-      <td><%= o.OrderDateOrder ? new Date(o.OrderDateOrder).toLocaleString('vi-VN') : '' %></td>
-    </tr>
-    <% }) %>
-  </tbody>
-</table>
+<%- include('./layout/header', { active: 'orders' }) %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3 class="mb-0">Quản lý đơn hàng</h3>
+</div>
+
+<div class="card border-0 shadow-sm">
+  <div class="card-body p-0">
+    <table class="table table-hover align-middle mb-0">
+      <thead style="background:#343a40;color:#fff">
+        <tr>
+          <th width="100">Mã đơn</th>
+          <th>Khách hàng</th>
+          <th width="140" class="text-end">Tổng tiền</th>
+          <th width="150" class="text-center">Ngày đặt</th>
+          <th width="160" class="text-center">Trạng thái</th>
+          <th width="180">Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (orders && orders.length) { %>
+          <% orders.forEach(function(o) {
+            let stt = (o.StatusOrder || '').trim();
+            let badgeClass = 'bg-warning text-dark';
+            if (stt === 'Đang chuẩn bị hàng') badgeClass = 'bg-info text-dark';
+            else if (stt === 'Đang vận chuyển' || stt === 'Đang giao hàng') badgeClass = 'bg-secondary';
+            else if (stt === 'Hoàn thành' || stt === 'Giao hàng thành công') badgeClass = 'bg-success';
+            else if (stt === 'Đã hủy') badgeClass = 'bg-danger';
+          %>
+            <tr>
+              <td class="fw-bold">#<%= o.OrderCode || o.IDOrder %></td>
+              <td><%= o.FullNameUser || 'Khách' %></td>
+              <td class="text-end text-danger fw-bold"><%= Number(o.TotalAmountOrder).toLocaleString('vi-VN') %>đ</td>
+              <td class="text-center"><%= o.OrderDateOrder ? new Date(o.OrderDateOrder).toLocaleString('vi-VN') : '' %></td>
+              <td class="text-center"><span class="badge <%= badgeClass %>"><%= o.StatusOrder %></span></td>
+              <td>
+                <a href="/admin/orders/detail?id=<%= o.IDOrder %>" class="btn btn-sm btn-secondary">Xem</a>
+              </td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr><td colspan="6" class="text-center py-5 text-muted">Chưa có đơn hàng</td></tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
 </div></body></html>

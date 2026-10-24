@@ -1,0 +1,102 @@
+<%- include('./layout/header', { active: 'orders' }) %>
+
+<% 
+  const stt = (order.StatusOrder || '').trim();
+  let bgClass = 'bg-warning text-dark';
+  if (stt === 'Đang chuẩn bị hàng') bgClass = 'bg-info text-dark';
+  else if (stt === 'Đang vận chuyển' || stt === 'Đang giao hàng') bgClass = 'bg-secondary';
+  else if (stt === 'Hoàn thành' || stt === 'Giao hàng thành công') bgClass = 'bg-success';
+  else if (stt === 'Đã hủy') bgClass = 'bg-danger';
+%>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <a href="/admin/orders" class="btn btn-secondary btn-sm me-2">← Quay lại</a>
+    <h3 class="d-inline-block mb-0">Đơn hàng #<%= order.OrderCode || order.IDOrder %></h3>
+  </div>
+  <button onclick="window.print()" class="btn btn-outline-secondary btn-sm">🖨️ In hóa đơn</button>
+</div>
+
+<div class="row g-4 mb-4">
+  <!-- Thông tin khách hàng -->
+  <div class="col-md-6">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-body">
+        <h6 class="text-primary fw-bold text-uppercase mb-3">Thông tin khách hàng</h6>
+        <div class="mb-2"><span class="text-muted" style="width:140px;display:inline-block">Người nhận:</span> <strong><%= order.FullNameUser || 'Khách lẻ' %></strong></div>
+        <div class="mb-2"><span class="text-muted" style="width:140px;display:inline-block">Số điện thoại:</span> <strong><%= order.Phone || order.PhoneNumberUser || '' %></strong></div>
+        <div class="mb-2"><span class="text-muted" style="width:140px;display:inline-block">Địa chỉ:</span> <strong><%= order.ShippingAddressOrder || '' %></strong></div>
+        <div class="mb-2"><span class="text-muted" style="width:140px;display:inline-block">Ghi chú:</span> <em><%= order.Note || 'Không có' %></em></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thông tin đơn hàng -->
+  <div class="col-md-6">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-body">
+        <h6 class="text-primary fw-bold text-uppercase mb-3">Thông tin đơn hàng</h6>
+        <div class="mb-2">
+          <span class="text-muted" style="width:140px;display:inline-block">Trạng thái:</span>
+          <span class="badge <%= bgClass %>"><%= order.StatusOrder %></span>
+        </div>
+        <div class="mb-2"><span class="text-muted" style="width:140px;display:inline-block">Ngày đặt:</span> <strong><%= order.OrderDateOrder ? new Date(order.OrderDateOrder).toLocaleString('vi-VN') : '' %></strong></div>
+        <div class="mb-2"><span class="text-muted" style="width:140px;display:inline-block">Thanh toán:</span> <strong style="text-transform:capitalize"><%= order.PaymentMethodOrder %></strong></div>
+        <div class="mb-2"><span class="text-muted" style="width:140px;display:inline-block">ID Tài khoản:</span> <strong>#<%= order.IDUser %></strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Chi tiết sản phẩm -->
+<div class="card border-0 shadow-sm mb-4">
+  <div class="card-body">
+    <h6 class="text-primary fw-bold text-uppercase mb-3">Chi tiết sản phẩm</h6>
+    <table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th width="5%">#</th>
+          <th width="45%">Sản phẩm</th>
+          <th width="15%" class="text-center">Số lượng</th>
+          <th width="15%" class="text-end">Đơn giá</th>
+          <th width="20%" class="text-end">Thành tiền</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% let i = 1; (items || details || []).forEach(function(item) { %>
+          <tr>
+            <td><%= i++ %></td>
+            <td><strong><%= item.NameProduct %></strong></td>
+            <td class="text-center">x<%= item.QuantityOrderDetail || item.Quantity %></td>
+            <td class="text-end"><%= Number(item.UnitPriceOrderDetail || item.PriceProduct).toLocaleString('vi-VN') %>đ</td>
+            <td class="text-end"><strong><%= Number(item.SubtotalOrderDetail || (item.UnitPriceOrderDetail * item.QuantityOrderDetail)).toLocaleString('vi-VN') %>đ</strong></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <div class="text-end mt-3">
+      <span class="fs-5">Tổng cộng:</span>
+      <span class="fs-4 fw-bold text-danger ms-3"><%= Number(order.TotalAmountOrder).toLocaleString('vi-VN') %>đ</span>
+    </div>
+  </div>
+</div>
+
+<% if (stt !== 'Hoàn thành' && stt !== 'Đã hủy') { %>
+  <div class="card border-0 shadow-sm">
+    <div class="card-body d-flex align-items-center gap-2">
+      <strong class="me-3">Xử lý đơn hàng:</strong>
+      <% if (stt === 'Chờ xác nhận') { %>
+        <a href="/admin/orders/confirm?id=<%= order.IDOrder %>" class="btn btn-success btn-sm">✓ Duyệt đơn</a>
+        <a href="/admin/orders/cancel?id=<%= order.IDOrder %>" class="btn btn-danger btn-sm"
+           onclick="return confirm('Bạn chắc chắn muốn hủy đơn này?')">✕ Hủy đơn</a>
+      <% } else if (stt === 'Đang chuẩn bị hàng') { %>
+        <a href="/admin/orders/ship?id=<%= order.IDOrder %>" class="btn btn-info btn-sm">🚚 Gửi hàng đi</a>
+      <% } else if (stt === 'Đang vận chuyển' || stt === 'Đang giao hàng') { %>
+        <a href="/admin/orders/complete?id=<%= order.IDOrder %>" class="btn btn-primary btn-sm">★ Xác nhận Hoàn thành</a>
+      <% } %>
+    </div>
+  </div>
+<% } %>
+
+</div></body></html>
